@@ -1,0 +1,11 @@
+.filterRadio span {
+  margin-left: 1px !important;
+  font-family: IranSans600, sans-serif !important;
+  font-size: 8px !important;
+}
+
+@media only screen and (min-width: 952px) {
+  .filterRadio span {
+    font-size: 10px !important;
+  }
+}

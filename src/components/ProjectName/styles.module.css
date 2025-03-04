@@ -1,0 +1,30 @@
+/* styles.module.css */
+
+/* Container for the ProjectName component */
+.container {
+  padding: 0rem 0 0.5rem; /* Add padding for spacing */
+}
+
+/* Styling for the right separator line */
+.rightLine {
+  background-color: #d1d5db;
+}
+
+/* Styling for the project name text */
+
+/* Styling for the left separator line */
+.leftLine {
+  background-color: #d1d5db;
+}
+
+/* Ensure spacing and layout remain intact on smaller screens */
+@media (max-width: 640px) {
+  .container {
+    padding: 16px; /* Add padding for mobile screens */
+  }
+
+  .name {
+    font-size: 0.875rem /* 14px */;
+    line-height: 1.25rem /* 20px */; /* Adjust font size on smaller screens */
+  }
+}

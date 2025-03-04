@@ -1,0 +1,19 @@
+.toolbar {
+    @apply bg-formItem m-0 rounded-t-md border-none;
+
+    * {
+        @apply cursor-pointer;
+        direction: ltr;
+    }
+}
+
+.wrapper {
+    box-shadow: none;
+}
+
+.editor {
+    @apply h-fit min-h-32 border border-formItem2 !bg-white !m-0 !px-4 hover:bg-white rounded-b-md;
+    * {
+        direction: rtl;
+    }
+}

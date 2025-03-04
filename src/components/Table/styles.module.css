@@ -1,0 +1,8 @@
+.selectable .tbody .tr:hover .td {
+  cursor: pointer;
+  border-color: #02894c;
+}
+
+.stripe .tbody .tr:nth-child(even) .td {
+  background-color: #f2f2f2;
+}

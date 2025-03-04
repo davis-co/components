@@ -1,0 +1,58 @@
+.fieldset {
+  border-style: solid;
+  border-top-width: 0.5px;
+  border-color: #00000066;
+  min-width: 0px;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+  border-radius: 6px;
+}
+
+.borderImageByTitle {
+  top: -5px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-left-width: 0.5px;
+  border-right-width: 0.5px;
+  border-style: solid;
+  -moz-border-image: -moz-linear-gradient(top, #00000055 0%, transparent 100%);
+  -webkit-border-image: -webkit-linear-gradient(
+    top,
+    #00000055 0%,
+    transparent 100%
+  );
+  border-image: linear-gradient(to bottom, #00000055 0%, transparent 100%);
+  -webkit-border-image-slice: 0.5;
+  border-image-slice: 0.5;
+}
+
+.borderImage {
+  top: 2px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-left-width: 0.5px;
+  border-right-width: 0.5px;
+  border-style: solid;
+  -moz-border-image: -moz-linear-gradient(top, #00000055 0%, transparent 100%);
+  -webkit-border-image: -webkit-linear-gradient(
+    top,
+    #00000055 0%,
+    transparent 100%
+  );
+  border-image: linear-gradient(to bottom, #00000055 0%, transparent 100%);
+  -webkit-border-image-slice: 0.5;
+  border-image-slice: 0.5;
+}
+
+.border {
+  border: 0.5px solid black;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: #00000066;
+}
+
+.enLegend {
+  margin-left: 32px !important;
+  margin-right: auto !important;
+}

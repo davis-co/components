@@ -1,0 +1,10 @@
+.containerError {
+  border: 1px !important;
+  border-style: solid !important;
+  border-color: #960018 !important;
+}
+
+.options label {
+  min-width: 0;
+  flex: 1;
+}
