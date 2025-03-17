@@ -281,7 +281,7 @@ export const Header = ({
           title={title}
           className={classNames(
             styles.fieldset,
-            "px-2 md:px-4 !pt-4 !pb-2 md:!pb-5 relative !border-none"
+            "!px-2 md:px-4 !pt-4 !pb-2 md:!pb-5 relative !border-none "
           )}
           gradientBorder={false}
           titleClassName={
@@ -338,7 +338,7 @@ export const Header = ({
                 />
                 <div
                   className={classNames(
-                    "flex justify-between gap-1.5 md:gap-2 px-1 lg:px-2 xs:py-[3px] border-[0.25px] border-solid bg-[#f7f7f7] hover:bg-white xs:!rounded-[4px] md:!rounded border-black",
+                    "flex justify-between gap-1.5 md:gap-2 px-1 lg:px-2 lg:py-[12.5px] md:h-[23px] md:py-[3px] xs:py-[5px] border-[0.25px] border-solid bg-[#f7f7f7] hover:bg-white xs:!rounded-[4px] md:!rounded border-black",
                     formData[1585472454126] ? "bg-white" : ""
                   )}
                 >

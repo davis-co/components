@@ -94,7 +94,7 @@ export const Label = ({
                     className,
                     styles.label,
                     educationalContent?.show ? "pl-[20px]" : "",
-                    "flex items-center text-center font-700 text-black text-2xs lg:text-xs xl:text-sm overflow-hidden",
+                    "flex items-center text-center font-700 text-black text-[11px] lg:text-xs xl:text-sm overflow-hidden",
                     en
                         ? styles.enLabel +
                               " " +

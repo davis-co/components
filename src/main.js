@@ -42,6 +42,13 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 // import { Tab } from "./components/Tab/index.jsx";
 // import { FormProvider, useForm, useFormContext } from "react-hook-form";
 // import { useEffect, useRef, useState } from "react";
+// import { SpecialistDashboardPage } from "./pages/SpecialistDashboardPage/index.jsx";
+// import { SpecialistPrintPage } from "./pages/SpecialistPrintPage/index.jsx";
+// import { TextField } from "./components/TextField/index.jsx";
+// import { RadioOptions } from "./components/RadioOptions/index.jsx";
+// import { Select } from "./components/Select/index.jsx";
+// import { CheckBoxGroup } from "./components/CheckBoxGroup/index.jsx";
+
 
 // const MyFunction = () => {
 //   const editorRef = useRef(null);
@@ -66,12 +73,17 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 //   return (
 //     <Page back={true}>
 //       <FormProvider {...methods}>
-//         <TextEditor
+//         {/* <TextEditor
 //           ref={editorRef}
 //           useFormContext={useFormContext}
 //           questionKey="123"
 //           label="سوال"
-//         />
+//         /> */}
+//         <TextField label={"title"}
+//         divider={"center"}/>
+//         <RadioOptions label="ddddfgfgdfgf" options={[{label:"fdfdf",value:"5454"}]}/>
+//         <Select label="select" options={[{label:"fdfdf",value:"5454"}]}/>
+//         <CheckBoxGroup label="check" options={[{label:"fdfdf",value:"5454"}]}/>
 //       </FormProvider>
 //     </Page>
 //   );
