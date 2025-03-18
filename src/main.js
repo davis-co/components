@@ -32,64 +32,137 @@ export { SpecialistPrintPage } from "./pages/SpecialistPrintPage/index.jsx";
 // sections
 export { Prescription } from "./sections/Prescription/index.jsx";
 
+// import ReactDOM from "react-dom/client"
+// import "./index.css"
+// import { Page } from "./components/Page/index.jsx"
+// import { Button } from "./components/Button/index.jsx"
+// import { TextEditor } from "./components/TextEditor/index.jsx"
+// import { FormFields } from "./layouts/FormFields/index.jsx"
+// import { Tab } from "./components/Tab/index.jsx"
+// import { FormProvider, useForm, useFormContext } from "react-hook-form"
+// import { useEffect, useRef, useState } from "react"
+// import { SpecialistDashboardPage } from "./pages/SpecialistDashboardPage/index.jsx"
+// import { SpecialistPrintPage } from "./pages/SpecialistPrintPage/index.jsx"
+// import { TextField } from "./components/TextField/index.jsx"
+// import { RadioOptions } from "./components/RadioOptions/index.jsx"
+// import { Select } from "./components/Select/index.jsx"
+// import { CheckBoxGroup } from "./components/CheckBoxGroup/index.jsx"
 
-// import ReactDOM from "react-dom/client";
-// import "./index.css";
-// import { Page } from "./components/Page/index.jsx";
-// import { Button } from "./components/Button/index.jsx";
-// import { TextEditor } from "./components/TextEditor/index.jsx";
-// import { FormFields } from "./layouts/FormFields/index.jsx";
-// import { Tab } from "./components/Tab/index.jsx";
-// import { FormProvider, useForm, useFormContext } from "react-hook-form";
-// import { useEffect, useRef, useState } from "react";
-// import { SpecialistDashboardPage } from "./pages/SpecialistDashboardPage/index.jsx";
-// import { SpecialistPrintPage } from "./pages/SpecialistPrintPage/index.jsx";
-// import { TextField } from "./components/TextField/index.jsx";
-// import { RadioOptions } from "./components/RadioOptions/index.jsx";
-// import { Select } from "./components/Select/index.jsx";
-// import { CheckBoxGroup } from "./components/CheckBoxGroup/index.jsx";
+// export const getTabs = (watch) => {
+//   return [
+//     // isServiceAvailable(watch, ["1509263811768"]) &&
 
+//     // isServiceAvailable(watch, ["1578402098317"]) &&
 
+//     {
+//       title: "معاینات چشم پزشک",
+//       form: <></>,
+//       tabs: [
+//         // isServiceAvailable(watch, ["1509264231113"]) &&
+//         {
+//           title: "بینایی سنج",
+//           form: <></>,
+//         },
+//         {
+//           title: "متخصص",
+//           form: <></>,
+//         },
+//         {
+//           title: "QC چشم",
+//           form: <></>,
+//         },
+//       ].filter((item) => item != false && item != null),
+//     },
+//     {
+//       title: "معاینات گوش و حلق و بینی",
+//       form: <></>,
+//       tabs: [
+//         // isServiceAvailable(watch, ["1509264231113"]) &&
+//         {
+//           title: "بینایی سنجی",
+//           form: <></>,
+//         },
+//         {
+//           title: " متخصص گوش و حلق و بینی",
+//           form: <></>,
+//         },
+//         {
+//           title: "QC گوش",
+//           form: <></>,
+//         },
+//       ].filter((item) => item != false && item != null),
+//     },
+//     {
+//       title: "تخصصی دندان",
+//       form: <></>,
+//     },
+//     {
+//       title: "اسپیرومتری",
+//       form: <></>,
+//       tabs: [
+//         { title: "اسپیرومتری", form: <></> },
+//         { title: "QC اسپیرومتری", form: <></> },
+//       ].filter((item) => item != false && item != null),
+//     },
+//     {
+//       title: "معاینات تخصصی قلب",
+//       form: <></>,
+//       tabs: [
+//         { title: "قلب", form: <></> },
+//         { title: "QC قلب", form: <></> },
+//       ].filter((item) => item != false && item != null),
+//     },
+//     {
+//       title: "روانشناسی",
+//       form: <></>,
+//       tabs: [
+//         { title: "روان شناسی", form: <></> },
+//         { title: "QC روان", form: <></> },
+//       ].filter((item) => item != false && item != null),
+//     },
+//   ].filter((item) => item != false && item != null)
+// }
 // const MyFunction = () => {
-//   const editorRef = useRef(null);
+//   const editorRef = useRef(null)
 
 //   const methods = useForm({
 //     mode: "all",
-//   });
-//   const [tab, setActiveTab] = useState({});
-//   const tabRef = useRef(null);
+//   })
+//   const [tab, setActiveTab] = useState({})
+//   const tabRef = useRef(null)
 //   const handleAppendFromParent = () => {
 //     if (editorRef.current) {
-//       editorRef.current.appendText("ّبا سلام واحترام" + "\n"); // Calls the function inside the child component
+//       editorRef.current.appendText("ّبا سلام واحترام" + "\n") // Calls the function inside the child component
 //     }
-//   };
+//   }
 
 //   useEffect(() => {
 //     setTimeout(() => {
-//       editorRef.current.clear();
-//     }, 5000);
-//   }, []);
+//       editorRef.current.clear()
+//     }, 5000)
+//   }, [])
 
 //   return (
 //     <Page back={true}>
 //       <FormProvider {...methods}>
-//         {/* <TextEditor
+//         <TextEditor
 //           ref={editorRef}
 //           useFormContext={useFormContext}
 //           questionKey="123"
 //           label="سوال"
-//         /> */}
-//         <TextField label={"title"}
-//         divider={"center"}/>
-//         <RadioOptions label="ddddfgfgdfgf" options={[{label:"fdfdf",value:"5454"}]}/>
-//         <Select label="select" options={[{label:"fdfdf",value:"5454"}]}/>
-//         <CheckBoxGroup label="check" options={[{label:"fdfdf",value:"5454"}]}/>
+//         />
+//         <Tab
+//           tabs={getTabs(methods.watch)}
+//           active={tab}
+//           onChange={setActiveTab}
+//           ref={tabRef}
+//         />
 //       </FormProvider>
 //     </Page>
-//   );
-// };
+//   )
+// }
 
 // ReactDOM.createRoot(document.getElementById("root")).render(
 //   //   <StrictMode>
 //   <MyFunction />
-// );
+// )
