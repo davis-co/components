@@ -136,7 +136,7 @@ export const Table = ({
                 className={
                   "text-2xs lg:text-xs border-none min-w-6 min-h-6 max-h-6 max-w-6 lg:min-w-8 lg:min-h-8 text-center rounded shadow-sm hover:scale-110 transition-all bg-white" +
                   " " +
-                  "!rounded-r-none"
+                  "!rounded-r-none mr-1"
                 }
                 onClick={() => handleDownload()}
                 icon={

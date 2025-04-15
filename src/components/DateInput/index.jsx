@@ -1,14 +1,15 @@
 /* eslint-disable react/prop-types */
-import classNames from "classnames";
-import DatePicker from "react-multi-date-picker";
-import persian from "react-date-object/calendars/persian";
-import persian_fa from "react-date-object/locales/persian_fa";
-import { BiError } from "react-icons/bi";
-import { Controller } from "react-hook-form";
-import { Divider } from "../Divider";
-import { Label } from "../Label";
-import CalendarSVG from "../../assets/icons/calendar.svg";
-import styles from "./styles.module.css";
+import classNames from "classnames"
+import DatePicker from "react-multi-date-picker"
+import persian from "react-date-object/calendars/persian"
+import persian_fa from "react-date-object/locales/persian_fa"
+import { BiError } from "react-icons/bi"
+import { Controller } from "react-hook-form"
+import { Divider } from "../Divider"
+import { Label } from "../Label"
+import CalendarSVG from "../../assets/icons/calendar.svg"
+import styles from "./styles.module.css"
+import { useRef } from "react"
 
 export const DateInput = ({
   label,
@@ -39,12 +40,13 @@ export const DateInput = ({
   userGuide,
   educationalContent,
 }) => {
+  const datePickerRef = useRef()
   const labelDirectionStyle = {
     center: "label-center",
     right: "label-right",
     left: "label-left",
-  };
-  const error = errors?.[id] ? errors?.[id]?.message : null;
+  }
+  const error = errors?.[id] ? errors?.[id]?.message : null
 
   return (
     <div
@@ -110,12 +112,14 @@ export const DateInput = ({
               showOtherDays
               value={watch(id) || ""}
               onChange={(date) => onChange(date ? date.toString() : "")}
+              ref={datePickerRef}
             />
           )}
         />
         {/* Calendar Icon */}
         {icon && (
           <span
+            onClick={() => datePickerRef.current?.openCalendar()}
             className={classNames(
               styles.icon,
               "absolute left-1 lg:left-1.5 top-1/2 -translate-y-1/2 transition-all duration-200 cursor-pointer",
@@ -134,5 +138,5 @@ export const DateInput = ({
         </span>
       )}
     </div>
-  );
-};
+  )
+}

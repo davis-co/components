@@ -24,7 +24,7 @@ export const Form_Inputs = [
   {
     label: `نام خانوادگی`,
     icon: FaUser,
-    placeholder: "",
+    placeholder: "در این قسمت وارد کنید",
     qKey: "4942",
   },
   {

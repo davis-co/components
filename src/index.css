@@ -125,3 +125,7 @@ input[type="number"] {
 .rdw-embedded-modal {
   min-height: fit-content !important;
 }
+
+.rdw-editor-main {
+  height: fit-content !important;
+}

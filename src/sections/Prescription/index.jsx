@@ -154,7 +154,7 @@ export function Prescription({
           divider={"center"}
           options={Drugs_List}
           onChange={(val) => handleFormData("10520", val)}
-          value={formData[10520]}
+          value={formData[10520]?.id || null}
         />
         <TextField
           questionKey={"1730098894463"}

@@ -47,7 +47,7 @@ export const FieldSet = ({
                         ? styles.borderImageByTitle
                         : styles.borderImage
                     : styles.border,
-                "relative w-full px-3 md:px-4 py-4 lg:px-8 lg:pt-6"
+                "relative w-full py-4  lg:pt-6"
             )}
         >
             {children}

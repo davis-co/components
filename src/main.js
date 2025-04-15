@@ -26,6 +26,7 @@ export { ArchiveTable } from "./layouts/ArchiveTable/index.jsx";
 export { EmptyForm } from "./layouts/EmptyForm/index.jsx";
 export { FormFields } from "./layouts/FormFields/index.jsx";
 export { Header as SpecialistFormPageHeader } from "./pages/SpecialistFormPage/layouts/Header/index.jsx";
+export {CFCHeader} from "./pages/SpecialistFormPage/layouts/CFCHeader/index.jsx"
 // page
 export { SpecialistDashboardPage } from "./pages/SpecialistDashboardPage/index.jsx";
 export { SpecialistPrintPage } from "./pages/SpecialistPrintPage/index.jsx";
@@ -47,6 +48,12 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 // import { RadioOptions } from "./components/RadioOptions/index.jsx"
 // import { Select } from "./components/Select/index.jsx"
 // import { CheckBoxGroup } from "./components/CheckBoxGroup/index.jsx"
+// // import { CFCHeader } from "./pages/SpecialistFormPage/layouts/CFCHeader/index.jsx"
+// import SwitchButton from "./components/SwitchButton/index.jsx"
+// import { Header } from "./pages/SpecialistDashboardPage/layouts/Header/index.jsx"
+// import { Prescription } from "./sections/Prescription/index.jsx"
+// import { DateInput } from "./components/DateInput/index.jsx"
+
 
 // export const getTabs = (watch) => {
 //   return [
@@ -141,11 +148,18 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 //       editorRef.current.clear()
 //     }, 5000)
 //   }, [])
+//   const SwitchOptions = {
+//     OPTION1: "غیرفعال",
+//     OPTION2: "فعال"
+//   };
 
+//   const [user, setUser] = useState(null);
+//   const [users, setUsers] = useState([]);
 //   return (
 //     <Page back={true}>
 //       <FormProvider {...methods}>
-//         <TextEditor
+//         {/* <CFCHeader  useFormContext={useFormContext}/> */}
+//         {/* <TextEditor
 //           ref={editorRef}
 //           useFormContext={useFormContext}
 //           questionKey="123"
@@ -156,7 +170,34 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 //           active={tab}
 //           onChange={setActiveTab}
 //           ref={tabRef}
-//         />
+//         /> */}
+//           {/* <Header
+//           title={"مشخصات کاربر"}
+//           user={user}
+//           users={users}
+//           setUsers={setUsers}
+//           setUser={setUser}
+//           request={()=>{}}
+//           // toast={toast}
+//           JID={{
+//             RFID: "1",
+//             NID: "2",
+//             ID: "3",
+//           }}
+//         /> */}
+//         {/* <SwitchButton SwitchOptions={SwitchOptions}/> */}
+//         <Select options={[{label:"dddf",value:"555"}]}/>
+//         <TextField useFormContext={useFormContext} questionKey={"6555"} value={"نوشته"}/>
+//         <Prescription  drugsList={methods.watch("1730017486062")}
+//         onChange={(val) => methods.setValue("1730017486062", val)}/>
+//         <DateInput
+//         divider={"center"}
+//         watch={methods.watch}
+//         errors={""}
+//         id="1556915100056"
+//         label={"تاریخ تماس"}
+//         containerClassName="!shadow-none"
+//         className="!bg-white"/>
 //       </FormProvider>
 //     </Page>
 //   )

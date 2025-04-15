@@ -1,0 +1,83 @@
+.normalContainer {
+    background: linear-gradient(0deg, #eefeff 0%, #b2e5f8 100%);
+  }
+  
+  .vipContainer {
+    background: linear-gradient(
+      346deg,
+      #ffa800 3.07%,
+      #ffcd1a 6.85%,
+      #ffb800 12.51%,
+      #eb9b00 20.64%,
+      #f3a200 29.5%,
+      #fff78e 50.27%,
+      #ffe2a9 74.82%,
+      #ffa800 97.47%
+    );
+  }
+  
+  /* Fieldset Styling with Gradient Border */
+  .fieldset {
+    background: linear-gradient(white, white) padding-box,
+      linear-gradient(180deg, #222222, #222222) border-box;
+  }
+  
+  .fieldset legend {
+    background-color: transparent;
+    margin-right: 0px;
+  }
+  
+  .radio span {
+    margin-left: 1px !important;
+    font-family: IranSans600, sans-serif !important;
+  }
+  
+  .filterRadio span {
+    margin-left: 1px !important;
+    font-family: IranSans600, sans-serif !important;
+  }
+  
+  .table tr:hover td {
+    border-color: #02894c;
+  }
+  
+  .table th {
+    background-color: #f1f1f1 !important;
+  }
+  
+  @media only screen and (min-width: 303px) and (max-width: 671px) {
+    .radio {
+      gap: 1px !important;
+    }
+    .radio span {
+      font-size: 8px !important;
+    }
+    .filterRadio span {
+      font-size: 8px !important;
+    }
+  }
+  
+  @media only screen and (min-width: 672px) and (max-width: 951px) {
+    .radio {
+      gap: 1px !important;
+    }
+    .radio span {
+      font-size: 8px !important;
+    }
+    .filterRadio span {
+      font-size: 8px !important;
+    }
+  }
+  
+  @media only screen and (min-width: 952px) {
+    .modal {
+      width: clamp(950px, 96vw, 1280px);
+    }
+    .radio span {
+      font-size: 10px !important;
+    }
+    .filterRadio span {
+      font-size: 10px !important;
+    }
+  }
+  

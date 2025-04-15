@@ -50,7 +50,8 @@ export const Select = ({
       id={questionKey}
       className={classNames(
         inputClassName,
-        "text-2xs lg:text-xs rounded border-[0.5px] border-solid border-black hover:border-success  bg-transparent font-400  py-1 lg:py-0.5 px-1 lg:px-1.5  !ring-0 hover:bg-white cursor-pointer outline-none"
+        "text-2xs lg:text-xs rounded border-[0.5px] border-solid  border-black hover:border-success  font-400  py-1 lg:py-0.5 px-1 lg:px-1.5  !ring-0 hover:bg-white cursor-pointer outline-none"
+      , field?.value ? "!bg-white" : "bg-transparent"
       )}
       onChange={(e) => {
         const selectedValue =
@@ -134,7 +135,8 @@ export const Select = ({
         {search ? (
           <div className="relative w-full">
             <div
-              className="flex items-center px-1 justify-between w-full rounded border-[0.5px] border-black py-0.5 md:py-[3px] lg:py-[5px] bg-formItemInput cursor-pointer select-none"
+              className={classNames("flex items-center px-1 justify-between w-full rounded border-[0.5px] border-black py-0.5 md:py-[3px] lg:py-[5px]  cursor-pointer select-none"
+              ,value ? "!bg-white " : "bg-formItemInput")}
               onClick={() => setIsOpen(!isOpen)}
             >
               <span className={"text-2xs lg:text-xs xl:text-[13px] font-400"}>
