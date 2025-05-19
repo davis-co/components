@@ -54,6 +54,7 @@ export const FormFields = ({
         {...commonProps}
         register={register}
         divider={props.divider || "center"}
+        setValue={setValue}
         optionsContainer={props.optionsContainer}
         radioClassName={props.radioClassName}
         labelClassName="!text-center"

@@ -13,7 +13,7 @@ import {
 import styles from "./styles.module.css";
 import { HiOutlinePrinter } from "react-icons/hi";
 import { printThis } from "../../utils/printThis";
-import { EditorState } from "draft-js";
+// import { EditorState } from "draft-js";
 
 export const TextEditor = forwardRef(
   (
@@ -78,31 +78,70 @@ export const TextEditor = forwardRef(
     const [isLoading, setIsLoading] = useState(true);
     const EditorRef = useRef(null);
 
+    // const handleAppendText = (value) => {
+    //   if (!editorState) return;
+
+    //   const contentState = editorState.getCurrentContent();
+    //   const selection = editorState.getSelection();
+    //   const newText = value;
+
+    //   const newContentState = Modifier.insertText(
+    //     contentState,
+    //     selection,
+    //     newText
+    //   );
+
+    //   const newEditorState = EditorState.push(
+    //     editorState,
+    //     newContentState,
+    //     "insert-characters"
+    //   );
+
+    //   setEditorState(newEditorState);
+
+    //   const html = window.stateToHTML(newContentState);
+    //   setValue(questionKey, html, { shouldValidate: true });
+    // };
     const handleAppendText = (value) => {
       if (!editorState) return;
-
+    
       const contentState = editorState.getCurrentContent();
       const selection = editorState.getSelection();
-      const newText = value;
-
+    
+      const endKey = contentState.getLastBlock().getKey();
+      const endLength = contentState.getLastBlock().getLength();
+    
+      const lastBlockText = contentState.getLastBlock().getText();
+    
+    
+      const newSelection = selection.merge({
+        anchorKey: endKey,
+        anchorOffset: endLength,
+        focusKey: endKey,
+        focusOffset: endLength,
+        isBackward: false,
+      });
+    
+      const insertText =  value;
+    
       const newContentState = Modifier.insertText(
         contentState,
-        selection,
-        newText
+        newSelection,
+        insertText
       );
-
+    
       const newEditorState = EditorState.push(
         editorState,
         newContentState,
         "insert-characters"
       );
-
+    
       setEditorState(newEditorState);
-
+    
       const html = window.stateToHTML(newContentState);
       setValue(questionKey, html, { shouldValidate: true });
     };
-
+    
     const clear = () => {
       setEditorState(EditorState.createEmpty());
       setValue(questionKey, "", { shouldValidate: true });

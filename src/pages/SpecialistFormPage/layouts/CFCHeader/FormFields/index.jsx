@@ -9,6 +9,8 @@ import { TextEditor } from "../../../../../components/TextEditor"
 import { TextField } from "../../../../../components/TextField"
 import { useEffect } from "react"
 import HeaderRadioOption from "../HeaderRadioOption"
+import SwitchButton from "../../../../../components/SwitchButton"
+import { safeWatch } from "../../../../../utils/safeWatch"
 
 export const FormFields = ({
   BC,
@@ -58,7 +60,7 @@ export const FormFields = ({
         optionsContainer={props.optionsContainer}
         radioClassName={props.radioClassName}
         labelClassName="!text-center"
-        active={watch(props.questionKey)}
+        active={safeWatch(watch,props.questionKey)}
         errors={errors}
         options={props.options}
         labelMore={props.labelMore}
@@ -261,6 +263,9 @@ export const FormFields = ({
         formData={props.formData}
       />
     ),
+    HeaderSwitchButton:(
+      <SwitchButton options={props.options}/>
+    )
   }
 
   return componentMap[props.component] || null

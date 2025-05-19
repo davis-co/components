@@ -1,5 +1,5 @@
 .list {
-  @apply flex p-1 flex-1 gap-1 overflow-x-auto items-center;
+  @apply flex p-1 flex-1 gap-1 overflow-x-auto items-center ;
   scroll-behavior: smooth;
   &::-webkit-scrollbar {
     display: none;
@@ -32,7 +32,7 @@
 } */
 
 .tab-inactive {
-  @apply border-none !text-black transition-all !min-w-[28vw] md:!min-w-[20vw] lg:!min-w-[15vw] xl:!min-w-[12vw];
+  @apply border-none !text-[#727272] transition-all !min-w-[45vw] md:!min-w-[20vw] lg:!max-w-screen-lg xl:!min-w-[12vw];
   background: linear-gradient(180deg, #fff 0%, #e0fcff 100%);
 }
 .tab-inactive:hover {
@@ -41,7 +41,7 @@
 }
 
 .tab-active {
-  @apply border-none !text-white transition-all !min-w-[28vw] md:!min-w-[20vw] lg:!min-w-[15vw] xl:!min-w-[12vw] !bg-success;
+  @apply border-none !text-white transition-all !min-w-[45vw] md:!min-w-[20vw] lg:!max-w-screen-lg xl:!min-w-[12vw] !h-[27px] !bg-success;
 }
 
 .chosen-inner-tab {
@@ -49,20 +49,23 @@
 }
 
 .dropdown {
-  @apply border-none !text-black transition-all !min-w-[28vw] md:!min-w-[20vw] lg:!min-w-[15vw] xl:!min-w-[12vw];
+  @apply border-none !text-[#727272] transition-all !min-w-[45vw] md:!min-w-[20vw] lg:!max-w-screen-lg xl:!min-w-[12vw];
 }
 
 .dropdown-gradient {
+
   background: linear-gradient(180deg, #fff 0%, #c1ffe3 100%);
 }
 
 .dropdown-default {
   background: linear-gradient(180deg, #fff 0%, #e0fcff 100%);
   box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.25) inset;
+  
 }
 
 .dropdown-default:hover {
   background: linear-gradient(180deg, #fff 0%, #c1ffe3 100%) !important;
+  
 }
 
 .dropdown-default:hover {

@@ -7,20 +7,25 @@ import { Button } from "../../../../components/Button"
 import { FieldSet } from "../../../../components/FieldSet"
 import { Table } from "../../../../components/Table"
 import { FormFields } from "./FormFields"
+import { Label } from "../../../../components/Label"
 
 export const CFCHeader = ({
   title = "جست و جو",
   headerItems,
+  paziresh_id,
+  specialKey,
   useFormContext,
   tableColumns,
   request = () => {},
   user,
   setUser,
   users = [],
+  setTableInfo,
   setUsers,
   JID,
   toast = () => {},
   colFilter = 6,
+  ...props
 }) => {
   //create object of questionkey from headerItems
   // const initialFilterValues = headerItems.reduce((acc, item) => {
@@ -188,41 +193,119 @@ export const CFCHeader = ({
 
     setFormData(updatedData)
   }
+  // const _getUser = async (i) => {
+  //   handleOnChange(users[i][specialKey], specialKey)
+
+  //   const user = users[i]
+  //   let formData
+  //   fillFormWithUserData(user)
+  //   {
+  //     paziresh_id
+  //       ? (formData = {
+  //           1545718677214: users[i]["1545718677214"],
+  //         })
+  //       : (formData = {
+  //           [specialKey]: users[i][specialKey],
+  //         })
+  //   }
+  //   setUserInfoLoading(true)
+  //   await request({
+  //     jobId: JID.ID,
+  //     dataInfo: formData,
+  //   })
+  //     .then((res) => {
+  //       if (!res.error) {
+  //         const userInfo = res?.data
+
+  //         setUser({
+  //           ...userInfo,
+  //           1545718677214: users[i]["1545718677214"], // afzoodane id user user info
+  //           // tarikh_paziresh: users[i].date, // afzoodane tarikhe paziresh be user info
+  //         })
+  //         if (userInfo) {
+  //           fillFormWithUserData(userInfo || {})
+  //           handleOnChange(userInfo?.["4942"] || "", "4942")
+  //         } else {
+  //           handleOnChange("", "4942")
+  //         }
+  //       } else {
+  //         toast.error("خطای دریافت اطلاعات" + "-" + res.error_code)
+  //       }
+  //     })
+  //     .catch((err) => toast.error(err.message))
+  //     .finally(() => setUserInfoLoading(false))
+  // }
   const _getUser = async (i) => {
-    handleOnChange(users[i]["6620"], "6620")
+    handleOnChange(users[i][specialKey], specialKey)
 
     const user = users[i]
-
+    let formData
     fillFormWithUserData(user)
-    const formData = {
-      1545718677214: users[i]["1545718677214"],
-    }
-    setUserInfoLoading(true)
-    await request({
-      jobId: JID.ID,
-      dataInfo: formData,
-    })
-      .then((res) => {
-        if (!res.error) {
-          const userInfo = res?.data
 
-          setUser({
-            ...userInfo,
-            1545718677214: users[i]["1545718677214"], // afzoodane id user user info
-            // tarikh_paziresh: users[i].date, // afzoodane tarikhe paziresh be user info
+    if (paziresh_id) {
+      formData = {
+        1545718677214: users[i]["1545718677214"],
+      }
+    } else {
+      formData = {
+        [specialKey]: users[i][specialKey],
+      }
+    }
+
+    setUserInfoLoading(true)
+
+    try {
+      const requests = [
+        request({
+          jobId: JID.ID,
+          dataInfo: formData,
+        }),
+      ]
+
+      if (JID.ID2) {
+        requests.push(
+          request({
+            jobId: JID.ID2,
+            dataInfo: {
+              ...formData,
+              offset: offset,
+              limit: tableSize,
+            },
           })
-          if (userInfo) {
-            fillFormWithUserData(userInfo || {})
-            handleOnChange(userInfo?.["4942"] || "", "4942") // set kardan input code meli dar header
-          } else {
-            handleOnChange("", "4942")
-          }
-        } else {
-          toast.error("خطای دریافت اطلاعات" + "-" + res.error_code)
-        }
-      })
-      .catch((err) => toast.error(err.message))
-      .finally(() => setUserInfoLoading(false))
+        )
+      }
+
+      const responses = await Promise.all(requests)
+      const res1 = responses[0]
+      const res2 = responses[1] // ممکنه undefined باشه
+
+      if (!res1.error) {
+        const userInfo = res1.data || {}
+        const extraInfo = !res2?.error ? res2?.data || {} : {}
+
+
+        setTableInfo(extraInfo)
+        setUser({
+          ...userInfo,
+          1545718677214: users[i]["1545718677214"], // afzoodane id user user info
+          // tarikh_paziresh: users[i].date, // afzoodane tarikhe paziresh be user info
+        })
+     if(userInfo){
+       fillFormWithUserData({ ...userInfo, ...extraInfo })
+       handleOnChange(userInfo?.["4942"] || "", "4942")
+      } else {
+        toast.error("خطای دریافت اطلاعات  " + res1.error_code)
+      }
+    }
+
+      if (res2?.error) {
+        toast.error("خطای دریافت اطلاعات  " + res2.error_code)
+      }
+    } catch (err) {
+      toast.error(err.message)
+    } finally {
+      setUserInfoLoading(false)
+    }
   }
 
   const refreshActive =
@@ -262,6 +345,14 @@ export const CFCHeader = ({
                   ? "grid md:grid-cols-4 grid-cols-2 lg:gap-8 gap-4  justify-center items-center"
                   : headerItems?.length == "6"
                   ? "grid md:grid-cols-3 grid-cols-2 lg:gap-8 gap-4 justify-center items-center"
+                  : headerItems?.length == "3" 
+                  ? "grid md:grid-cols-3 grid-cols-2 lg:gap-8 gap-4 justify-center items-center"
+                   : headerItems?.length == "4" 
+                  ? "grid md:grid-cols-4 grid-cols-2 lg:gap-8 gap-4 justify-center items-center"
+                  : headerItems?.length == "2"
+                  ? "grid md:grid-cols-3 grid-cols-2 lg:gap-8 gap-4 justify-center items-center"
+                  :headerItems?.length == "7"
+                  ? "grid md:grid-cols-3 grid-cols-2 lg:gap-8 gap-4 justify-center items-center"
                   : ""
               )}
               // className="flex w-full flex-wrap items-end gap-x-2 md:gap-x-[1vw] lg:gap-x-2 xs:gap-x-[1.3vw] gap-y-3 md:gap-y-4 lg:flex"
@@ -287,50 +378,86 @@ export const CFCHeader = ({
                   {...q.props}
                 />
               ))}
-            </div>
-            <div
-              className={
-                "border-success  ml-auto md:ml-0 mt-2 md:mt-0 mr-auto md:mr-0 !rounded-[2px] mx-auto w-1/3 self-center flex"
-              }
-            >
-              {refreshActive ? (
-                <Button
-                  variant="icon"
-                  icon={
-                    <GrRefresh
-                      color="black"
-                      className="xs:text-xs md:text-sm lg:text-xl"
+
+              {headerItems?.length == "2" ? (
+                refreshActive ? (
+                  <div>
+                    <Label label="button" className="text-transparent" />
+                    <Button
+                      variant="icon"
+                      icon={
+                        <GrRefresh
+                          color="black"
+                          className="xs:text-xs md:text-sm lg:text-xl"
+                        />
+                      }
+                      className={
+                        " xs:!rounded-l-none xs:!rounded-r-[2px] md:!rounded-r xs:h-[22px] md:h-[21.6px] lg:h-[25.6px] !bg-transparent !border-[0.5px] border-success  "
+                      }
+                      onClick={() =>
+                        setFormData(getInitialFormData(headerItems))
+                      }
                     />
-                  }
-                  className={
-                    " xs:!rounded-l-none xs:!rounded-r-[2px] md:!rounded-r xs:h-[22px] md:h-[21.6px] lg:h-[25.6px] !bg-transparent !border-[0.5px] border-success  "
-                  }
-                  // onClick={() =>
-                  //   setFormData({
-                  //     5143: null,
-                  //     5144: null,
-                  //     6018: null,
-                  //     1578727281983: null,
-                  //     1584351069008:null,
-                  //     1584359105492:null
-                  //   })
-                  // }
-                  onClick={() => setFormData(getInitialFormData(headerItems))}
-                />
+                  </div>
+                ) : null
               ) : null}
-              <Button
-                variant="outlined"
-                title={"نمایش اطلاعات"}
-                type="submit"
-                loading={searchLoading}
-                className={classNames(
-                  refreshActive
-                    ? "!bg-success xs:!rounded-r-none xs:!rounded-l-[2px] md:!rounded-l !text-white "
-                    : "!bg-transparent xs:!rounded-[2px] md:!rounded",
-                  "xs:h-[22px] md:h-[21.6px] lg:h-[25.6px] !border-success  !text-[9px] lg:!text-xs hover:!bg-success hover:text-white w-full"
-                )}
-              />
+              {headerItems?.length == "2" ? (
+                <div>
+                  <Label label="button" className="text-transparent" />
+                  <Button
+                    variant="outlined"
+                    title={
+                      props.SubmitTitle ? props.SubmitTitle : "نمایش اطلاعات"
+                    }
+                    type="submit"
+                    loading={searchLoading}
+                    className={classNames(
+                      refreshActive
+                        ? "!bg-success xs:!rounded-r-none xs:!rounded-l-[2px] md:!rounded-l !text-white "
+                        : "!bg-transparent xs:!rounded-[2px] md:!rounded",
+                      "xs:h-[22px] md:h-[21.6px] lg:h-[25px] !border-success  !font-700 lg:!text-xs !text-[11px] hover:!bg-success hover:text-white w-full !py-[14px]"
+                    )}
+                  />
+                </div>
+              ) : null}
             </div>
+            {headerItems?.length > "2" ? (
+              <div
+                className={
+                  "border-success  ml-auto md:ml-0 mt-2 md:mt-0 mr-auto md:mr-0 !rounded-[2px] mx-auto w-1/3 self-center flex"
+                }
+              >
+                {refreshActive ? (
+                  <Button
+                    variant="icon"
+                    icon={
+                      <GrRefresh
+                        color="black"
+                        className="xs:text-xs md:text-sm lg:text-xl"
+                      />
+                    }
+                    className={
+                      " xs:!rounded-l-none xs:!rounded-r-[2px] md:!rounded-r xs:h-[22px] md:h-[21.6px] lg:h-[25.6px] !bg-transparent !border-[0.5px] border-success  "
+                    }
+                    onClick={() => setFormData(getInitialFormData(headerItems))}
+                  />
+                ) : null}
+                <Button
+                  variant="outlined"
+                  title={
+                    props.SubmitTitle ? props.SubmitTitle : "نمایش اطلاعات"
+                  }
+                  type="submit"
+                  loading={searchLoading}
+                  className={classNames(
+                    refreshActive
+                      ? "!bg-success xs:!rounded-r-none xs:!rounded-l-[2px] md:!rounded-l !text-white "
+                      : "!bg-transparent xs:!rounded-[2px] md:!rounded",
+                    "xs:h-[22px] md:h-[21.6px] lg:h-[25.6px] !border-success  !text-[9px] lg:!text-xs hover:!bg-success hover:text-white w-full"
+                  )}
+                />
+              </div>
+            ) : null}
           </form>
         </FieldSet>
         {users?.length ? (

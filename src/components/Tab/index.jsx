@@ -104,7 +104,7 @@ const RenderList = ({
               : item.tabs.some((sItem) => selectedTabs.includes(sItem.title))
               ? styles["dropdown-gradient"]
               : styles["dropdown-default"],
-            "flex justify-between items-center px-2 rounded cursor-pointer",
+            "flex  items-center gap-1 px-2 rounded cursor-pointer",
             en ? "flex-row-reverse" : "flex-row",
             deep > 0 ? "!py-1 !my-auto" : "py-2"
           )}
@@ -112,8 +112,12 @@ const RenderList = ({
         >
           <span
             className={classNames(
-              activeDropdown == item.title ? "!text-white" : "",
-              "text-2xs lg:text-xs xl:text-sm font-600 select-none"
+              activeDropdown === item.title
+                ? "!text-white "
+                : item.tabs.some((sItem) => selectedTabs.includes(sItem.title))
+                ? "!text-black"
+                : "",
+              "text-2xs lg:text-xs xl:text-sm font-600 select-none mx-auto"
             )}
           >
             {item.title}
@@ -129,7 +133,7 @@ const RenderList = ({
             <Fragment>
               {createPortal(
                 <div
-                  className="absolute min-w-[28vw] md:min-w-[20vw] lg:min-w-[15vw] xl:min-w-[12vw] z-[1000]"
+                  className="absolute !min-w-[45vw] md:!min-w-[20vw] xl:!min-w-[12vw] z-[1000] max-h-[216px] overflow-y-auto"
                   style={{
                     top: dropdownPosition.top + 4,
                     left: dropdownPosition.left,

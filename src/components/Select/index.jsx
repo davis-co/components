@@ -162,11 +162,11 @@ export const Select = ({
                   />
                 </div>
                 {searchValue?.length >= 2 ? (
-                  options.filter((o) => o.label.includes(searchValue))
+                  options.filter((o) => o.label?.includes(searchValue))
                     ?.length ? (
                     <ul className="flex flex-col divide-y divide-solid divide-gray-200 max-h-[200px] overflow-y-scroll bg-[#f7f7f7] shadow-md">
                       {options
-                        .filter((o) => o.label.includes(searchValue))
+                        .filter((o) => o.label?.includes(searchValue))
                         .map((o) => (
                           <li
                             key={o.label}

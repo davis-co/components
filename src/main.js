@@ -48,12 +48,12 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 // import { RadioOptions } from "./components/RadioOptions/index.jsx"
 // import { Select } from "./components/Select/index.jsx"
 // import { CheckBoxGroup } from "./components/CheckBoxGroup/index.jsx"
-// // import { CFCHeader } from "./pages/SpecialistFormPage/layouts/CFCHeader/index.jsx"
+// import { CFCHeader } from "./pages/SpecialistFormPage/layouts/CFCHeader/index.jsx"
 // import SwitchButton from "./components/SwitchButton/index.jsx"
 // import { Header } from "./pages/SpecialistDashboardPage/layouts/Header/index.jsx"
 // import { Prescription } from "./sections/Prescription/index.jsx"
 // import { DateInput } from "./components/DateInput/index.jsx"
-
+// import moment from "jalali-moment"
 
 // export const getTabs = (watch) => {
 //   return [
@@ -76,6 +76,26 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 //         },
 //         {
 //           title: "QC چشم",
+//           form: <></>,
+//         },
+//         {
+//           title: "QCdddd چشم",
+//           form: <></>,
+//         },
+//         {
+//           title: "QCdddd چشم QCdddd مقدار",
+//           form: <></>,
+//         },
+//         {
+//           title: "QCdddd چشم",
+//           form: <></>,
+//         },
+//         {
+//           title: "QCdddd چشم",
+//           form: <></>,
+//         },
+//         {
+//           title: "QCdddd چشم",
 //           form: <></>,
 //         },
 //       ].filter((item) => item != false && item != null),
@@ -148,30 +168,154 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 //       editorRef.current.clear()
 //     }, 5000)
 //   }, [])
-//   const SwitchOptions = {
-//     OPTION1: "غیرفعال",
-//     OPTION2: "فعال"
-//   };
+//   const SwitchOptions = [
+//     { label: "غیرفعال", value: "2" },
+//     { label: "فعال", value: "6" },
+//   ]
 
-//   const [user, setUser] = useState(null);
-//   const [users, setUsers] = useState([]);
+//   const [user, setUser] = useState(null)
+//   const [users, setUsers] = useState([])
+
+//   const headerItems = [
+//     {
+//       component: "DateInput",
+//       id: "5143",
+//       label: "از تاریخ (پذیرش)",
+//       containerClassName: "!shadow-none",
+//       className: "!bg-white",
+//     },
+//     {
+//       component: "DateInput",
+//       id: "5144",
+//       label: "تا تاریخ (پذیرش)",
+//       containerClassName: "!shadow-none",
+//       className: "!bg-white",
+//     },
+//     // {
+//     //   component: "Select",
+//     //   options: [{ label: "dddd", value: "556" }],
+//     //   questionKey: "1578727281983",
+//     //   label: "نام قرارداد",
+//     //   containerClassName: "!shadow-none",
+//     // },
+//     {
+//       component: "TextField",
+//       questionKey: "6018",
+//       label: "کد ملی",
+//       labelClassName: "!text-[9px] lg:!text-xs",
+//       className: "bg-white",
+//       containerClassName: "!shadow-none",
+//     },
+//     {
+//       component: "TextField",
+//       questionKey: "1584351069008",
+//       label: "نام خانوادگی",
+//       labelClassName: "!text-[9px] lg:!text-xs",
+//       className: "bg-white",
+//       containerClassName: "!shadow-none",
+//     },
+//     {
+//         component: "TextField",
+//         questionKey: "1584351069008",
+//         label: "نام خانوادگی",
+//         labelClassName: "!text-[9px] lg:!text-xs",
+//         className: "bg-white",
+//         containerClassName: "!shadow-none",
+//       },
+//       {
+//         component: "TextField",
+//         questionKey: "1584351069008",
+//         label: "نام خانوادگی",
+//         labelClassName: "!text-[9px] lg:!text-xs",
+//         className: "bg-white",
+//         containerClassName: "!shadow-none",
+//       },
+//       {
+//         component: "TextField",
+//         questionKey: "1584351069008",
+//         label: "نام خانوادگی",
+//         labelClassName: "!text-[9px] lg:!text-xs",
+//         className: "bg-white",
+//         containerClassName: "!shadow-none",
+//       },
+//     // {
+//     //   component: "HeaderRadioOption",
+//     //   label: "وضعیت QC",
+//     //   questionKey: "1586688732636",
+//     //   options: SwitchOptions,
+//     // },
+//     // {
+//     //   component: "Select",
+//     //   options: [{ label: "dddd", value: "556" }],
+//     //   questionKey: "1605005480295",
+//     //   label: "انتخاب تیم پزشکی",
+//     //   labelClassName: "!text-[9px] lg:!text-xs",
+//     //   containerClassName: "!shadow-none",
+//     // },
+//     // {
+//     //   component: "Select",
+//     //   options: [{ label: "dddd", value: "556" }],
+//     //   questionKey: "1605005461061",
+//     //   label: "انتخاب پزشک",
+//     //   labelClassName: "!text-[9px] lg:!text-xs",
+//     //   containerClassName: "!shadow-none",
+//     // },
+//     // { component: "HeaderSwitchButton", label: "سوئیچ", options: SwitchOptions },
+//   ]
+//   const HeaderTableColumns = [
+//     { key: "4941", label: "نام" },
+//     { key: "4942", label: "نام خانوادگی" },
+//     { key: "6620", label: "کدملی" },
+//     { key: "4950", label: "موبایل" },
+//     // { key: "date", label: "تاریخ اخرین پایش", format: (val) => val ? moment(val).locale("fa").format("YYYY/MM/DD") : "" },
+//     { key: "1579603635713", label: "نام قرارداد" },
+//     { key: "1544943430625", label: "نام پکیچ" },
+//   ]
+
 //   return (
 //     <Page back={true}>
 //       <FormProvider {...methods}>
+//         <CFCHeader
+//           title={"مشخصات کاربر"}
+//           tableColumns={HeaderTableColumns}
+//           user={user}
+//           users={users}
+//           setUsers={setUsers}
+//           setUser={setUser}
+//           request={() => {}}
+//           //   toast={toast}
+//           useFormContext={useFormContext}
+//           headerItems={headerItems}
+//           SubmitTitle="تست باتن"
+//           JID={{
+//             // RFID: JID.RFID,
+//             NID: 1,
+//             ID: 2,
+//           }}
+//         />
+//         <Select
+//         questionKey={"555"}
+//           options={HeaderTableColumns}
+//           // search={true}
+//           // onChange={() =>watch("555")}
+//           useFormContext={useFormContext}
+//           control={methods.control}
+//           register={methods.register}
+//         />
 //         {/* <CFCHeader  useFormContext={useFormContext}/> */}
 //         {/* <TextEditor
 //           ref={editorRef}
 //           useFormContext={useFormContext}
 //           questionKey="123"
 //           label="سوال"
-//         />
+//         /> */}
 //         <Tab
 //           tabs={getTabs(methods.watch)}
 //           active={tab}
 //           onChange={setActiveTab}
 //           ref={tabRef}
-//         /> */}
-//           {/* <Header
+//         />
+//         {/* <Header
 //           title={"مشخصات کاربر"}
 //           user={user}
 //           users={users}
@@ -186,7 +330,7 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 //           }}
 //         /> */}
 //         {/* <SwitchButton SwitchOptions={SwitchOptions}/> */}
-//         <Select options={[{label:"dddf",value:"555"}]}/>
+//         {/* <Select options={[{label:"dddf",value:"555"}]}/>
 //         <TextField useFormContext={useFormContext} questionKey={"6555"} value={"نوشته"}/>
 //         <Prescription  drugsList={methods.watch("1730017486062")}
 //         onChange={(val) => methods.setValue("1730017486062", val)}/>
@@ -197,7 +341,7 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 //         id="1556915100056"
 //         label={"تاریخ تماس"}
 //         containerClassName="!shadow-none"
-//         className="!bg-white"/>
+//         className="!bg-white"/> */}
 //       </FormProvider>
 //     </Page>
 //   )
