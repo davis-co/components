@@ -4,11 +4,11 @@ A versatile and reusable React Button component built with Tailwind CSS and CSS 
 
 ## Features
 
--   **Customizable Variants**: Easily switch between styles like `variant`, `text`, `outlined`, and more.
--   **Loading State**: Shows a spinner when the button is in a loading state.
--   **Icon Support**: Add icons alongside text or as icon-only buttons.
--   **Disabled State**: Automatically styles and disables the button when required.
--   **Responsive and Accessible**: Follows accessibility standards with dynamic styling for responsiveness.
+- **Customizable Variants**: Easily switch between styles like `variant`, `text`, `outlined`, and more.
+- **Loading State**: Shows a spinner when the button is in a loading state.
+- **Icon Support**: Add icons alongside text or as icon-only buttons.
+- **Disabled State**: Automatically styles and disables the button when required.
+- **Responsive and Accessible**: Follows accessibility standards with dynamic styling for responsiveness.
 
 ## Usage
 

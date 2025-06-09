@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
-import classNames from "classnames"
-import DatePicker from "react-multi-date-picker"
-import persian from "react-date-object/calendars/persian"
-import persian_fa from "react-date-object/locales/persian_fa"
-import { BiError } from "react-icons/bi"
-import { Controller } from "react-hook-form"
-import { Divider } from "../Divider"
-import { Label } from "../Label"
-import CalendarSVG from "../../assets/icons/calendar.svg"
-import styles from "./styles.module.css"
-import { useRef } from "react"
+import classNames from "classnames";
+import DatePicker from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import { BiError } from "react-icons/bi";
+import { Controller } from "react-hook-form";
+import { Divider } from "../Divider";
+import { Label } from "../Label";
+import CalendarSVG from "../../assets/icons/calendar.svg";
+import styles from "./styles.module.css";
+import { useRef } from "react";
 
 export const DateInput = ({
   label,
@@ -39,14 +39,15 @@ export const DateInput = ({
   disabled,
   userGuide,
   educationalContent,
+  onChange: externalOnChange,
 }) => {
-  const datePickerRef = useRef()
+  const datePickerRef = useRef();
   const labelDirectionStyle = {
     center: "label-center",
     right: "label-right",
     left: "label-left",
-  }
-  const error = errors?.[id] ? errors?.[id]?.message : null
+  };
+  const error = errors?.[id] ? errors?.[id]?.message : null;
 
   return (
     <div
@@ -95,7 +96,7 @@ export const DateInput = ({
               inputClass={
                 styles.dateInput +
                 " " +
-                `w-full font-400 text-2xs lg:text-xs xl:text-sm text-black 
+                `w-full font-400 text-2xs lg:text-xs xl:text-sm text-black
                                 placeholder:text-2xs lg:placeholder:text-xs bg-transparent border-none outline-none py-1 pr-1 lg:pr-1.5 hover:bg-white hover:border-black`
               }
               placeholder={placeholder}
@@ -111,7 +112,15 @@ export const DateInput = ({
               fixRelativePosition={false}
               showOtherDays
               value={watch(id) || ""}
-              onChange={(date) => onChange(date ? date.toString() : "")}
+              onChange={(date) => {
+                const value = date ? date.toString() : "";
+
+                onChange(value); // ثبت در فرم
+                if (typeof externalOnChange === "function") {
+                  externalOnChange(value); // صدا زدن تابع بیرونی
+                }
+              }}
+              // onChange={(date) => onChange(date ? date.toString() : "")}
               ref={datePickerRef}
             />
           )}
@@ -138,5 +147,5 @@ export const DateInput = ({
         </span>
       )}
     </div>
-  )
-}
+  );
+};

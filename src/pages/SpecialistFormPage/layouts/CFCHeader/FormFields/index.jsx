@@ -1,16 +1,16 @@
 /* eslint-disable react/prop-types */
-import { CheckBoxGroup } from "../../../../../components/CheckBoxGroup"
-import { DateInput } from "../../../../../components/DateInput"
-import { FileField } from "../../../../../components/FileField"
-import { ProgressChart } from "../../../../../components/Charts/Progress"
-import { RadioOptions } from "../../../../../components/RadioOptions"
-import { Select } from "../../../../../components/Select"
-import { TextEditor } from "../../../../../components/TextEditor"
-import { TextField } from "../../../../../components/TextField"
-import { useEffect } from "react"
-import HeaderRadioOption from "../HeaderRadioOption"
-import SwitchButton from "../../../../../components/SwitchButton"
-import { safeWatch } from "../../../../../utils/safeWatch"
+import { CheckBoxGroup } from "../../../../../components/CheckBoxGroup";
+import { DateInput } from "../../../../../components/DateInput";
+import { FileField } from "../../../../../components/FileField";
+import { ProgressChart } from "../../../../../components/Charts/Progress";
+import { RadioOptions } from "../../../../../components/RadioOptions";
+import { Select } from "../../../../../components/Select";
+import { TextEditor } from "../../../../../components/TextEditor";
+import { TextField } from "../../../../../components/TextField";
+import { useEffect } from "react";
+import HeaderRadioOption from "../HeaderRadioOption";
+import SwitchButton from "../../../../../components/SwitchButton";
+import { safeWatch } from "../../../../../utils/safeWatch";
 
 export const FormFields = ({
   BC,
@@ -25,13 +25,13 @@ export const FormFields = ({
     control,
     setValue,
     formState: { errors },
-  } = useFormContext()
+  } = useFormContext();
 
   useEffect(() => {
     return () => {
-      if (unmount) setValue(props.questionKey, null)
-    }
-  }, [])
+      if (unmount) setValue(props.questionKey, null);
+    };
+  }, []);
 
   const commonProps = {
     containerClassName: `${props.containerClassName} max-h-fit`,
@@ -49,7 +49,7 @@ export const FormFields = ({
         }
       : null,
     en: props.en,
-  }
+  };
 
   const componentMap = {
     RadioOptions: (
@@ -60,11 +60,16 @@ export const FormFields = ({
         optionsContainer={props.optionsContainer}
         radioClassName={props.radioClassName}
         labelClassName="!text-center"
-        active={safeWatch(watch,props.questionKey)}
+        active={safeWatch(watch, props.questionKey)}
         errors={errors}
         options={props.options}
         labelMore={props.labelMore}
         validation={props.validation}
+         onChange={(value) => {
+    setValue(props.questionKey, value);  // مقدار رو ست کن
+    props.onChange?.(value);             // اگر تابع خارجی وجود داره، صداش کن
+  }}
+        // onChange={(value)=>props.onChange?.(value)}
         archive={
           props.archive
             ? {
@@ -86,6 +91,7 @@ export const FormFields = ({
         validation={props.validation}
         divider={props.divider}
         labelMore={props.labelMore}
+        onChange={(e)=>props.onChange?.(e.target.value)}
         archive={
           props.archive
             ? {
@@ -111,6 +117,8 @@ export const FormFields = ({
         educationalContent={props.educationalContent}
         labelMore={props.labelMore}
         validation={props.validation}
+        onChange={props.onChange}
+        // onChange={(e)=>props.onChange?.(e.target.value)}
         archive={
           props.archive
             ? {
@@ -132,6 +140,7 @@ export const FormFields = ({
         ranges={props.ranges}
         educationalContent={props.educationalContent}
         required={props.validation}
+        onChange={props.onChange}
         archive={
           props.archive
             ? {
@@ -155,7 +164,7 @@ export const FormFields = ({
         educationalContent={props.educationalContent}
         labelMore={props.labelMore}
         value={props.value}
-        onChange={props.onChange}
+        onChange={(value)=>props.onChange?.(value)}
         validation={props.validation}
         register={register}
         archive={
@@ -186,6 +195,7 @@ export const FormFields = ({
         checkBoxClassName={props.checkBoxClassName}
         optionsContainer={props.optionsContainer}
         validation={props.validation}
+        onChange={(values)=>props.onChange?.(values)}
         archive={
           props.archive
             ? {
@@ -216,6 +226,7 @@ export const FormFields = ({
         divider={props.divider}
         educationalContent={props.educationalContent}
         labelMore={props.labelMore}
+        onChange={(date)=>props.onChange?.(date)}
         archive={
           props.archive
             ? {
@@ -244,6 +255,7 @@ export const FormFields = ({
         labelMore={props.labelMore}
         validation={props.validation}
         register={register}
+        onChange={props.onChange}
         archive={
           props.archive
             ? {
@@ -261,12 +273,18 @@ export const FormFields = ({
         {...commonProps}
         options={props.options}
         formData={props.formData}
+         onChange={(value) => {
+    setValue(props.questionKey, value);  // مقدار رو ست کن
+    props.onChange?.(value);             // اگر تابع خارجی وجود داره، صداش کن
+  }}
+        // onChange={(val)=>props.onChange?.(val)}
       />
     ),
-    HeaderSwitchButton:(
-      <SwitchButton options={props.options}/>
-    )
-  }
+    HeaderSwitchButton: (
+      <SwitchButton options={props.options} 
+      onChange={(val)=>props.onChange?.(val)} />
+    ),
+  };
 
-  return componentMap[props.component] || null
-}
+  return componentMap[props.component] || null;
+};

@@ -6,11 +6,11 @@ The `RadioOptions` component is a flexible and accessible group of radio buttons
 
 ## Features
 
--   **Customizable Layout**: Adapts to different screen sizes and layouts (flexible or wrapped).
--   **Error Handling**: Displays error messages with customizable icons.
--   **Dynamic Options**: Easily render a list of options with labels and values.
--   **Form Integration**: Works seamlessly with form libraries like React Hook Form.
--   **Accessibility**: Includes ARIA attributes and supports user guidance.
+- **Customizable Layout**: Adapts to different screen sizes and layouts (flexible or wrapped).
+- **Error Handling**: Displays error messages with customizable icons.
+- **Dynamic Options**: Easily render a list of options with labels and values.
+- **Form Integration**: Works seamlessly with form libraries like React Hook Form.
+- **Accessibility**: Includes ARIA attributes and supports user guidance.
 
 ---
 
@@ -46,60 +46,60 @@ The `RadioOptions` component is a flexible and accessible group of radio buttons
 ### Basic Example
 
 ```jsx
-import { RadioOptions } from "react-elements-davis"
-import { useForm } from "react-hook-form"
+import { RadioOptions } from "react-elements-davis";
+import { useForm } from "react-hook-form";
 
 function FormExample() {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-    const options = [
-        { value: "1", label: "Option 1" },
-        { value: "2", label: "Option 2" },
-    ]
+  const options = [
+    { value: "1", label: "Option 1" },
+    { value: "2", label: "Option 2" },
+  ];
 
-    const onSubmit = (data) => {
-        console.log("Form Data:", data)
-    }
+  const onSubmit = (data) => {
+    // console.log("Form Data:", data)
+  };
 
-    return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <RadioOptions
-                label="Choose an option"
-                questionKey="exampleQuestion"
-                options={options}
-                register={register}
-                required
-                errors={errors}
-            />
-            <button type="submit">Submit</button>
-        </form>
-    )
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <RadioOptions
+        label="Choose an option"
+        questionKey="exampleQuestion"
+        options={options}
+        register={register}
+        required
+        errors={errors}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
 }
 ```
 
 ## With Error Handling
 
 ```jsx
-import { RadioOptions } from "react-elements-davis"
+import { RadioOptions } from "react-elements-davis";
 
 function ErrorExample() {
-    const errors = { question1: true }
+  const errors = { question1: true };
 
-    return (
-        <RadioOptions
-            label="Choose an option"
-            questionKey="question1"
-            options={[
-                { value: "1", label: "Option 1" },
-                { value: "2", label: "Option 2" },
-            ]}
-            errors={errors}
-            errorMessage="You must select an option."
-        />
-    )
+  return (
+    <RadioOptions
+      label="Choose an option"
+      questionKey="question1"
+      options={[
+        { value: "1", label: "Option 1" },
+        { value: "2", label: "Option 2" },
+      ]}
+      errors={errors}
+      errorMessage="You must select an option."
+    />
+  );
 }
 ```

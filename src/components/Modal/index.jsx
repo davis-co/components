@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { Button } from "../Button";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-
+import close from "../../assets/images/close.svg"
 export const Modal = ({ onClose, isOpen, children, containerClassName }) => {
   if (!isOpen) return null;
 
@@ -34,7 +34,8 @@ export const Modal = ({ onClose, isOpen, children, containerClassName }) => {
           className={
             "!p-1 lg:!p-2 !bg-transparent border-none !font-700 !text-2xl !text-black !shadow-none"
           }
-          title="&times;"
+          // title="&times;"
+          icon={<img src={close}/>}
           onClick={handleClose}
         />
         {children}

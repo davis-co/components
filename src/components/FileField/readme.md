@@ -30,7 +30,7 @@ const MyForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
   };
 
   return (

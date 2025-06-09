@@ -154,7 +154,7 @@ export const Select = ({
                   <TextField
                     icon={<img src={searchIcon} alt="جستجو" loading="lazy" />}
                     placeholder={
-                      placeholder || '"حداقل ۲ حرف از نام دارو را وارد کنید."'
+                      placeholder || "حداقل ۲ حرف از نام دارو را وارد کنید."
                     }
                     value={searchValue}
                     disabled={disabled}

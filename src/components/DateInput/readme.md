@@ -6,12 +6,12 @@ The `DateInput component` is a reusable, customizable date picker field built us
 
 ## Features
 
--   `Persian Calendar Support`: Uses the Persian calendar (`react-date-object`) for localized date selection.
--   `React-Hook-Form Integration`: Easily manages form state and validation.
--   `Customizable Placeholder`: Change the placeholder text for the input field.
--   `Error Handling`: Displays error messages dynamically.
--   `Customizable Icon`: Allows the use of custom icons for the calendar button.
--   `Theming`: Fully customizable using CSS classes or utility-first frameworks like Tailwind CSS.
+- `Persian Calendar Support`: Uses the Persian calendar (`react-date-object`) for localized date selection.
+- `React-Hook-Form Integration`: Easily manages form state and validation.
+- `Customizable Placeholder`: Change the placeholder text for the input field.
+- `Error Handling`: Displays error messages dynamically.
+- `Customizable Icon`: Allows the use of custom icons for the calendar button.
+- `Theming`: Fully customizable using CSS classes or utility-first frameworks like Tailwind CSS.
 
 ---
 
@@ -43,34 +43,34 @@ The `DateInput component` is a reusable, customizable date picker field built us
 ### Basic Example
 
 ```jsx
-import { useForm } from "react-hook-form"
-import DateInput from "./DateInput"
+import { useForm } from "react-hook-form";
+import DateInput from "./DateInput";
 
 function App() {
-    const {
-        control,
-        handleSubmit,
-        watch,
-        formState: { errors },
-    } = useForm()
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data)
-    }
+  const onSubmit = (data) => {
+    // console.log(data)
+  };
 
-    return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <DateInput
-                label="تاریخ تولد"
-                id="birthDate"
-                control={control}
-                required
-                errors={errors}
-                watch={watch}
-            />
-            <button type="submit">Submit</button>
-        </form>
-    )
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <DateInput
+        label="تاریخ تولد"
+        id="birthDate"
+        control={control}
+        required
+        errors={errors}
+        watch={watch}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
 }
 ```
 
@@ -79,39 +79,39 @@ function App() {
 ## Advanced Example with Custom Styles and Icon
 
 ```jsx
-import { useForm } from "react-hook-form"
-import DateInput from "./DateInput"
-import { FaRegCalendarAlt } from "react-icons/fa"
+import { useForm } from "react-hook-form";
+import DateInput from "./DateInput";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 function App() {
-    const {
-        control,
-        handleSubmit,
-        watch,
-        formState: { errors },
-    } = useForm()
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data)
-    }
+  const onSubmit = (data) => {
+    // console.log(data)
+  };
 
-    return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <DateInput
-                label="تاریخ شروع"
-                id="startDate"
-                control={control}
-                errors={errors}
-                watch={watch}
-                placeholder="انتخاب تاریخ"
-                format="DD-MM-YYYY"
-                icon={<FaRegCalendarAlt />}
-                containerClassName="custom-container"
-                className="custom-input"
-                labelClassName="custom-label"
-            />
-            <button type="submit">Submit</button>
-        </form>
-    )
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <DateInput
+        label="تاریخ شروع"
+        id="startDate"
+        control={control}
+        errors={errors}
+        watch={watch}
+        placeholder="انتخاب تاریخ"
+        format="DD-MM-YYYY"
+        icon={<FaRegCalendarAlt />}
+        containerClassName="custom-container"
+        className="custom-input"
+        labelClassName="custom-label"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
 }
 ```

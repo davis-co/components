@@ -22,6 +22,7 @@ export const Header = ({
   tableColumns = Table_Columns,
   request = () => {},
   vip,
+  resetFlag,
   user,
   setUser,
   users = [],
@@ -202,6 +203,14 @@ export const Header = ({
     ? [...new Set(rows?.map((row) => row[colFilter]))]
     : [];
 
+  useEffect(() => {
+    setFormData({
+      6365: null, // RF Id
+      4942: null, // Full name
+      6620: null, // National Code
+      1585472454126: null,
+    });
+  }, [resetFlag]);
   return (
     <Fragment>
       <Modal
