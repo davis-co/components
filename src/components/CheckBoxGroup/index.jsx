@@ -80,17 +80,20 @@ export const CheckBoxGroup = ({
       }}
     >
       {label && (
-        <Label
-          className={classNames(labelClassName, labelDirectionStyle[divider])}
-          userGuide={userGuide}
-          educationalContent={educationalContent}
-          archive={archive ? { ...archive, questionKey } : false}
-          label={label}
-          required={validation ? validation.required : null}
-          en={en}
-          more={labelMore}
-          disabled={disabled}
-        />
+        <div className="flex items-center gap-1">
+          <Label
+            className={classNames(labelClassName, labelDirectionStyle[divider])}
+            userGuide={userGuide}
+            educationalContent={educationalContent}
+            archive={archive ? { ...archive, questionKey } : false}
+            label={label}
+            required={validation ? validation.required : null}
+            en={en}
+            more={labelMore}
+            disabled={disabled}
+          />
+          <span className="text-xs text-gray-400">(امکان انتخاب چند گزینه)</span>
+        </div>
       )}
       {divider && (
         <Divider className={classNames(dividerClassName)} position={divider} />
