@@ -80,7 +80,7 @@ export const CheckBoxGroup = ({
       }}
     >
       {label && (
-        <div className="grid grid-cols-2 self-start gap-2">
+        <div className="grid grid-cols-2 self-start gap-[1px]">
           <Label
             className={classNames(labelClassName, labelDirectionStyle[divider])}
             userGuide={userGuide}
