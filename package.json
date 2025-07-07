@@ -3,7 +3,7 @@
   "main": "dist/main.cjs.js",
   "module": "dist/main.es.js",
   "style": "dist/main.css",
-  "version": "0.3.33",
+  "version": "0.3.36",
   "files": [
     "dist"
   ],
@@ -44,7 +44,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/davis-co/components"
+    "url": "git+https://github.com/davis-co/components.git"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

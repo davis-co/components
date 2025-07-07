@@ -33,7 +33,6 @@ export { SpecialistPrintPage } from "./pages/SpecialistPrintPage/index.jsx";
 // sections
 export { Prescription } from "./sections/Prescription/index.jsx";
 
-
 // import ReactDOM from "react-dom/client";
 // import "./index.css";
 // import { Page } from "./components/Page/index.jsx";
@@ -306,12 +305,12 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 //           register={methods.register}
 //         />
 //         {/* <CFCHeader  useFormContext={useFormContext}/> */}
-//         {/* <TextEditor
+//         <TextEditor
 //           ref={editorRef}
 //           useFormContext={useFormContext}
 //           questionKey="123"
 //           label="سوال"
-//         /> */}
+//         />
 //         <Tab
 //           tabs={getTabs(methods.watch)}
 //           active={tab}
@@ -333,20 +332,25 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 //           }}
 //         /> */}
 //         {/* <SwitchButton SwitchOptions={SwitchOptions}/> */}
-//         {/* <Select options={[{label:"dddf",value:"555"}]}/>
-//         <TextField useFormContext={useFormContext} questionKey={"6555"} value={"نوشته"}/>
-//         <Prescription  drugsList={methods.watch("1730017486062")}
-//         onChange={(val) => methods.setValue("1730017486062", val)}/>
+//         <Select options={[{ label: "dddf", value: "555" }]} />
+//         <TextField
+//           useFormContext={useFormContext}
+//           questionKey={"6555"}
+//           value={"نوشته"}
+//         />
+//         <Prescription
+//           drugsList={methods.watch("1730017486062")}
+//           onChange={(val) => methods.setValue("1730017486062", val)}
+//         />
 //         <DateInput
-//         divider={"center"}
-//         watch={methods.watch}
-//         errors={""}
-//         id="1556915100056"
-//         label={"تاریخ تماس"}
-//         containerClassName="!shadow-none"
-//         className="!bg-white"/> */}
-//         <RadioOptions options={[{label:"fdfgdfgfd",value:"4522"}]} label="بررسی زیر با رعایت اصول اخلاق پزشکی و رازداری و مراعات حریم خصوصی و حقوق فرد، فقط درجهت اهداف پزشکی برای ارتقای سلامت و استفاده تیم پزشکی از مراجعه کننده پرسیده شود:"
-//         labelMore={true}/>
+//           divider={"center"}
+//           watch={methods.watch}
+//           errors={""}
+//           id="1556915100056"
+//           label={"تاریخ تماس"}
+//           containerClassName="!shadow-none"
+//           className="!bg-white"
+//         />
 //       </FormProvider>
 //     </Page>
 //   );

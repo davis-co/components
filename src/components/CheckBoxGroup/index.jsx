@@ -80,7 +80,7 @@ export const CheckBoxGroup = ({
       }}
     >
       {label && (
-        <div className="flex items-center gap-1">
+        <div className="flex  items-center gap-1">
           <Label
             className={classNames(labelClassName, labelDirectionStyle[divider])}
             userGuide={userGuide}
@@ -92,7 +92,7 @@ export const CheckBoxGroup = ({
             more={labelMore}
             disabled={disabled}
           />
-          <span className="text-xs text-gray-400">(امکان انتخاب چند گزینه)</span>
+          <span className="text-xs text-gray-400 whitespace-nowrap flex-shrink-0">(امکان انتخاب چند گزینه)</span>
         </div>
       )}
       {divider && (

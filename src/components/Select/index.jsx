@@ -135,7 +135,7 @@ export const Select = ({
         {search ? (
           <div className="relative w-full">
             <div
-              className={classNames("flex items-center px-1 justify-between w-full rounded border-[0.5px] border-black py-0.5 md:py-[3px] lg:py-[5px]  cursor-pointer select-none"
+              className={classNames("flex items-center px-2  gap-2 justify-between w-full rounded border-[0.5px] border-black py-0.5 md:py-[3px] lg:py-[5px]  cursor-pointer select-none"
               ,value ? "!bg-white " : "bg-formItemInput")}
               onClick={() => setIsOpen(!isOpen)}
             >
