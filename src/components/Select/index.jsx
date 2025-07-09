@@ -50,7 +50,7 @@ export const Select = ({
       id={questionKey}
       className={classNames(
         inputClassName,
-        "text-2xs lg:text-xs rounded border-[0.5px] border-solid  border-black hover:border-success  font-400  py-1 lg:py-0.5 px-1 lg:px-1.5  !ring-0 hover:bg-white cursor-pointer outline-none"
+        "text-2xs lg:text-xs rounded border-[0.5px] border-solid  border-black hover:border-success  font-400  py-1 lg:py-0.5 lg:px-1.5 !ring-0 hover:bg-white cursor-pointer outline-none"
       , field?.value ? "!bg-white" : "bg-transparent"
       )}
       onChange={(e) => {

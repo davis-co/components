@@ -131,6 +131,19 @@ export const Label = ({
               }
             >
               {label}
+              {required && (
+                <span
+                  className={
+                    styles.required +
+                    " " +
+                    (en
+                      ? "ml-1 md:text-sm lg:text-lg !leading-none flex-shrink-0 self-center inline-block"
+                      : "mr-1 md:text-sm lg:text-lg flex-shrink-0 self-center inline-block")
+                  }
+                >
+                  *
+                </span>
+              )}
             </span>
             {showMore && (
               <img
@@ -143,20 +156,6 @@ export const Label = ({
           </Fragment>
         )}
         <div className="flex items-start">
-          {required && (
-            <span
-              className={
-                styles.required +
-                " " +
-                (en
-                  ? "ml-1 md:text-sm lg:text-lg !leading-none flex-shrink-0 self-center inline-block"
-                  : "mr-1 md:text-sm lg:text-lg flex-shrink-0 self-center inline-block")
-              }
-            >
-              *
-            </span>
-          )}
-
           {disabled && (
             <img
               src={LockIcon}
