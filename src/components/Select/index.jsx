@@ -45,41 +45,57 @@ export const Select = ({
     ...options,
   ];
 
+  // تابع رندر اصلی با select بومی - فقط استایل موقعیت تغییر کرده
   const renderSelect = ({ field }) => (
-    <select
-      id={questionKey}
-      className={classNames(
-        inputClassName,
-        "text-2xs lg:text-xs rounded border-[0.5px] border-solid  border-black hover:border-success  font-400  py-1 lg:py-0.5 lg:px-1.5 !ring-0 hover:bg-white cursor-pointer outline-none"
-      , field?.value ? "!bg-white" : "bg-transparent"
-      )}
-      onChange={(e) => {
-        const selectedValue =
-          e.target.value === "لطفا یک گزینه را انتخاب کنید."
-            ? undefined
-            : e.target.value;
-        if (field?.onChange) field.onChange(selectedValue);
-        if (onChange) onChange(selectedValue);
-      }}
-      value={field?.value ?? value}
-      ref={field?.ref}
-      dir={en ? "ltr" : "rtl"}
-      disabled={disabled}
-      {...props}
-    >
-      {defaultOptions.map((option) => (
-        <option
-          key={option.value}
-          value={option.value}
-          className={classNames(
-            "text-2xs lg:text-xs p-2 bg-transparent rounded border-[0.5px] border-solid border-black",
-            optionClassName
-          )}
-        >
-          {option.label}
-        </option>
-      ))}
-    </select>
+    <div className="relative w-full">
+      <select
+        id={questionKey}
+        className={classNames(
+          inputClassName,
+          "text-2xs lg:text-xs rounded border-[0.5px] border-solid border-black hover:border-success font-400 py-1.5 !ring-0 hover:bg-white cursor-pointer outline-none w-full appearance-none",
+          en ? "p-2" : "pr-2", // فضا برای آیکون
+          field?.value ? "!bg-white" : "bg-transparent"
+        )}
+        style={{
+          // استایل برای dropdown بومی
+          borderRadius: '4px',
+        }}
+        onChange={(e) => {
+          const selectedValue =
+            e.target.value === "لطفا یک گزینه را انتخاب کنید."
+              ? undefined
+              : e.target.value;
+          if (field?.onChange) field.onChange(selectedValue);
+          if (onChange) onChange(selectedValue);
+        }}
+        value={field?.value ?? value}
+        ref={field?.ref}
+        dir={en ? "ltr" : "rtl"}
+        disabled={disabled}
+        {...props}
+      >
+        {defaultOptions.map((option) => (
+          <option
+            key={option.value}
+            value={option.value}
+            className={classNames(
+              "text-2xs lg:text-xs p-2 bg-transparent border-[0.5px] border-solid border-black rounded-b",
+              optionClassName
+            )}
+          >
+            {option.label}
+          </option>
+        ))}
+      </select>
+      
+      {/* آیکون سفارشی */}
+      <IoChevronDownOutline
+        className={classNames(
+          "absolute top-1/2 -translate-y-1/2 pointer-events-none",
+          en ? "right-2" : "left-2"
+        )}
+      />
+    </div>
   );
 
   const labelDirectionStyle = {
@@ -113,6 +129,8 @@ export const Select = ({
         )}
         style={{
           boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.15)",
+          // اضافه کردن overflow visible برای نمایش صحیح dropdown
+          overflow: 'visible'
         }}
       >
         <Label
@@ -135,8 +153,10 @@ export const Select = ({
         {search ? (
           <div className="relative w-full">
             <div
-              className={classNames("flex items-center px-2  gap-2 justify-between w-full rounded border-[0.5px] border-black py-0.5 md:py-[3px] lg:py-[5px]  cursor-pointer select-none"
-              ,value ? "!bg-white " : "bg-formItemInput")}
+              className={classNames(
+                "flex items-center px-2 gap-2 justify-between w-full rounded border-[0.5px] border-black py-0.5 md:py-[3px] lg:py-[5px] cursor-pointer select-none",
+                value ? "!bg-white " : "bg-formItemInput"
+              )}
               onClick={() => setIsOpen(!isOpen)}
             >
               <span className={"text-2xs lg:text-xs xl:text-[13px] font-400"}>
@@ -149,7 +169,7 @@ export const Select = ({
               />
             </div>
             {isOpen ? (
-              <div className="absolute left-0 bottom-0 translate-y-full flex flex-col rounded-b w-full transition-all z-10">
+              <div className="absolute left-0 top-full translate-y-1 flex flex-col rounded-b w-full transition-all z-10">
                 <div className="bg-formItem2 p-1 rounded w-full">
                   <TextField
                     icon={<img src={searchIcon} alt="جستجو" loading="lazy" />}
