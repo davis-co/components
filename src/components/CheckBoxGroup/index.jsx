@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import classNames from "classnames";
+import { useEffect } from "react";
 import { BiError } from "react-icons/bi";
 import { CheckBox } from "../CheckBox";
 import { Divider } from "../Divider";
 import { Label } from "../Label";
 import styles from "./styles.module.css";
-import { useEffect } from "react";
 
 export const CheckBoxGroup = ({
   containerClassName,
@@ -30,59 +30,54 @@ export const CheckBoxGroup = ({
   en,
 }) => {
   const error = errors?.[questionKey] ? errors?.[questionKey]?.message : null;
-
   const selectedValues = (watch?.(questionKey) || []).map((o) => String(o));
-
-  // مقدار گزینه "Nothing" (هیچکدام) را تعریف کنید
-  const NOTHING_OPTION_VALUE = "10653";
+  const nothingValue = "10653";
 
   const handleCheckboxChange = (value) => {
-    let updatedValues;
+    const clickedValue = String(value);
+    const isNothingClicked = clickedValue === nothingValue;
+    const isNothingSelected = selectedValues.includes(nothingValue);
 
-    if (value === NOTHING_OPTION_VALUE) {
-      // اگر "Nothing" انتخاب شد:
-      // تمام گزینه‌های دیگر را حذف کن و فقط "Nothing" را نگه دار
-      updatedValues = selectedValues.includes(NOTHING_OPTION_VALUE)
-        ? [] // اگر از قبل انتخاب شده بود، خالی کن (یعنی از حالت انتخاب خارج شد)
-        : [NOTHING_OPTION_VALUE]; // اگر انتخاب نشده بود، فقط "Nothing" را انتخاب کن
+    let newValues;
+
+    if (isNothingClicked) {
+      // اگر کاربر روی گزینه "Nothing" کلیک کرد
+      // اگر از قبل انتخاب شده بود، آن را حذف کن، در غیر این صورت فقط آن را انتخاب کن
+      newValues = isNothingSelected ? [] : [nothingValue];
     } else {
-      // اگر گزینه دیگری انتخاب شد:
-      if (selectedValues.includes(NOTHING_OPTION_VALUE)) {
-        // اگر "Nothing" قبلا انتخاب شده بود، ابتدا "Nothing" را حذف کن
-        updatedValues = selectedValues.filter(
-          (v) => v !== NOTHING_OPTION_VALUE
-        );
+      // اگر کاربر روی گزینه‌ی دیگری کلیک کرد
+      if (isNothingSelected) {
+        // اگر "Nothing" انتخاب شده بود، آن را حذف و گزینه جدید را جایگزین کن
+        newValues = [clickedValue];
       } else {
-        // اگر "Nothing" انتخاب نشده بود، به صورت عادی اضافه/حذف کن
-        updatedValues = selectedValues.includes(String(value))
-          ? selectedValues.filter((v) => v !== String(value))
-          : [...selectedValues, String(value)];
+        // در غیر این صورت، گزینه کلیک شده را به لیست اضافه یا از آن کم کن
+        const isClickedValueSelected = selectedValues.includes(clickedValue);
+        if (isClickedValueSelected) {
+          newValues = selectedValues.filter((v) => v !== clickedValue);
+        } else {
+          newValues = [...selectedValues, clickedValue];
+        }
       }
     }
-    setValue?.(questionKey, updatedValues, { shouldValidate: true });
+    setValue?.(questionKey, newValues, { shouldValidate: true });
   };
 
-  const renderCheckBox = (option) => {
-    // اگر "Nothing" انتخاب شده باشد و این گزینه، "Nothing" نباشد، disabled شود
-    const isDisabled =
-      disabled ||
-      (selectedValues.includes(NOTHING_OPTION_VALUE) &&
-        option.value !== NOTHING_OPTION_VALUE);
+  const isNothingSelected = selectedValues.includes(nothingValue);
 
-    return (
-      <CheckBox
-        key={option.value}
-        name={questionKey}
-        value={option.value}
-        label={option.label}
-        checked={selectedValues.includes(option.value)}
-        onChange={() => handleCheckboxChange(option.value)}
-        className={classNames(checkBoxClassName)}
-        disabled={isDisabled} // استفاده از isDisabled جدید
-        en={en}
-      />
-    );
-  };
+  const renderCheckBox = (option) => (
+    <CheckBox
+      key={option.value}
+      name={questionKey}
+      value={option.value}
+      label={option.label}
+      checked={selectedValues.includes(String(option.value))}
+      onChange={() => handleCheckboxChange(option.value)}
+      className={classNames(checkBoxClassName)}
+      // اگر گزینه "Nothing" انتخاب شده، بقیه گزینه‌ها را غیرفعال کن
+      disabled={disabled || (isNothingSelected && String(option.value) !== nothingValue)}
+      en={en}
+    />
+  );
 
   const labelDirectionStyle = {
     center: "label-center",
@@ -94,7 +89,8 @@ export const CheckBoxGroup = ({
     if (register && validation) {
       register(questionKey, validation);
     }
-  }, []);
+  }, [register, validation, questionKey]);
+
 
   return (
     <div
@@ -108,7 +104,7 @@ export const CheckBoxGroup = ({
       }}
     >
       {label && (
-        <div className="grid grid-cols-3 md:grid-cols-2 md:gap-1 first:w-fit first:ml-auto md:first:*:col-span-1 first:*:col-span-2 ">
+        <div className="grid grid-cols-3 md:grid-cols-2 md:gap-1 first:w-fit first:ml-auto md:first:*:col-span-1 first:*:col-span-2">
           <Label
             className={classNames(labelClassName, labelDirectionStyle[divider])}
             userGuide={userGuide}
@@ -140,7 +136,7 @@ export const CheckBoxGroup = ({
       </div>
       {error && (
         <span className="error">
-          {<BiError className="text-xs lg:text-base" />}
+          <BiError className="text-xs lg:text-base" />
           {error}
         </span>
       )}
