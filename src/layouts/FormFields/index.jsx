@@ -170,20 +170,13 @@ export const FormFields = ({
         }
       />
     ),
-    CheckBoxGroup: (
+     CheckBoxGroup: (
       <CheckBoxGroup
-        {...commonProps}
+        {...props}
         watch={watch}
-        options={props.options}
         setValue={setValue}
         register={register}
         errors={errors}
-        divider={props.divider || "center"}
-        educationalContent={props.educationalContent}
-        labelMore={props.labelMore}
-        checkBoxClassName={props.checkBoxClassName}
-        optionsContainer={props.optionsContainer}
-        validation={props.validation}
         archive={
           props.archive
             ? {

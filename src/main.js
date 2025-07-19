@@ -21,7 +21,7 @@ export { FileField } from "./components/FileField/index.jsx";
 export { ProgressChart } from "./components/Charts/Progress.jsx";
 export { TextEditor } from "./components/TextEditor/index.jsx";
 export { Tab } from "./components/Tab/index.jsx";
-// layouts
+layouts
 export { ArchiveTable } from "./layouts/ArchiveTable/index.jsx";
 export { EmptyForm } from "./layouts/EmptyForm/index.jsx";
 export { FormFields } from "./layouts/FormFields/index.jsx";
