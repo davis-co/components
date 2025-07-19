@@ -74,7 +74,9 @@ export const CheckBoxGroup = ({
       onChange={() => handleCheckboxChange(option.value)}
       className={classNames(checkBoxClassName)}
       // اگر گزینه "Nothing" انتخاب شده، بقیه گزینه‌ها را غیرفعال کن
-      disabled={disabled || (isNothingSelected && String(option.value) !== nothingValue)}
+      disabled={
+        disabled || (isNothingSelected && String(option.value) !== nothingValue)
+      }
       en={en}
     />
   );
@@ -91,7 +93,6 @@ export const CheckBoxGroup = ({
     }
   }, [register, validation, questionKey]);
 
-
   return (
     <div
       className={classNames(
@@ -104,7 +105,15 @@ export const CheckBoxGroup = ({
       }}
     >
       {label && (
-        <div className="grid grid-cols-3 md:grid-cols-2 md:gap-1 first:w-fit first:ml-auto md:first:*:col-span-1 first:*:col-span-2">
+        <div
+          className={classNames(
+            "grid gap-1 first:w-fit first:*:col-span-2",
+            en
+              ? "!flex justify-strat items-center gap-0 first:w-full"
+              : "grid-cols-2 first:*:col-span-1"
+          )}
+          dir={en ? "ltr" : "rtl"}
+        >
           <Label
             className={classNames(labelClassName, labelDirectionStyle[divider])}
             userGuide={userGuide}
@@ -116,8 +125,10 @@ export const CheckBoxGroup = ({
             more={labelMore}
             disabled={disabled}
           />
-          <span className="text-[10px] text-nowrap md:text-xs text-gray-400">
-            (امکان انتخاب چند گزینه)
+          <span className={classNames("text-[10px] text-nowrap md:text-xs text-gray-400",
+            en ? "absolute left-16" :""
+          )}>
+            {en ? "(Select multiple options)" : "(امکان انتخاب چند گزینه)"}
           </span>
         </div>
       )}
