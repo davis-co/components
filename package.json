@@ -3,7 +3,7 @@
   "main": "dist/main.cjs.js",
   "module": "dist/main.es.js",
   "style": "dist/main.css",
-  "version": "0.3.49",
+  "version": "0.3.50",
   "files": [
     "dist"
   ],
