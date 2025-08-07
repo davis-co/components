@@ -184,6 +184,65 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 // const MyFunction = () => {
 //   const editorRef = useRef(null);
 
+//   const fakeServices = [
+//     {
+//       id: "1",
+//       title: "گزارش تخصصی",
+//       color: "#F5F5F5",
+//       print: (ogrid, paziresh) => {
+//         console.log("Print called with", { ogrid, paziresh });
+//       },
+//     },
+//   ];
+
+//   const fakeRequest = ({ jobId, dataInfo }) => {
+//     console.log("Request sent", { jobId, dataInfo });
+
+//     return new Promise((resolve) => {
+//       setTimeout(() => {
+//         if (jobId === 172) {
+//           // پاسخ برای لیست پذیرش‌ها
+//           resolve({
+//             error: false,
+//             data: [
+//               {
+//                 fn: "رضا رضایی",
+//                 tarikh_paziresh: "1402/03/12",
+//                 list_khadamat: "آزمایش خون",
+//                 1545718677214: "1234",
+//               },
+//             ],
+//           });
+//         } else if (jobId === 173) {
+//           // پاسخ برای دریافت ogrid
+//           resolve({
+//             error: false,
+//             data: [
+//               {
+//                 ogrid: {
+//                   1576563125067: [
+//                     {
+//                       20336: { id: "1" },
+//                     },
+//                   ],
+//                 },
+//               },
+//             ],
+//           });
+//         }
+//       }, 1000);
+//     });
+//   };
+
+//   const parse = (res) => res; // فرض کن نیاز به پارس خاصی نداری
+
+//   const contextData = {
+//     ogrid: null,
+//     setOgrid: (v) => console.log("Ogrid set", v),
+//     pazireshList: [],
+//     setPazireshList: (v) => console.log("PazireshList set", v),
+//   };
+
 //   const methods = useForm({
 //     mode: "all",
 //   });
@@ -380,8 +439,8 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 //           id="1556915100056"
 //           label={"تاریخ تماس"}
 //           validation={{
-//           required: "Required_Error",
-//         }}
+//             required: "Required_Error",
+//           }}
 //           containerClassName="!shadow-none"
 //           className="!bg-white"
 //         />
@@ -417,6 +476,12 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 //           }
 //           divider="left"
 //           en
+//         />
+//         <SpecialistPrintPage
+//           services={fakeServices}
+//           request={fakeRequest}
+//           parse={parse}
+//           contextData={contextData}
 //         />
 //       </FormProvider>
 //     </Page>
