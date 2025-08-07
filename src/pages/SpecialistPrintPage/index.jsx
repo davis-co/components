@@ -96,11 +96,10 @@ export function SpecialistPrintPage({
             <TextField
               label={"کد ملی" + " :"}
               questionKey="6620"
-              labelClassName={"!w-fit"}
               containerClassName={
-                "!flex-row rounded items-center justify-between md:!w-[328px]  group"
+                "!flex-row rounded md:!w-[328px] !gap-5 group"
               }
-              className={"w-[80%]"}
+              className="flex-1"
               icon={<img src={NationalCodeSVG} />}
               watch={watch}
               errors={errors}
