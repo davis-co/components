@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import { Fragment, useEffect, useState } from "react";
-import { Button } from "../../../../components/Button";
-import { TextField } from "../../../../components/TextField";
-import { FieldSet } from "../../../../components/FieldSet";
+import { Button } from "../../components/Button";
+import { TextField } from "../../components/TextField";
+import { FieldSet } from "../../components/FieldSet";
 import classNames from "classnames";
 import { GrRefresh } from "react-icons/gr";
 import styles from "./styles.module.css";
