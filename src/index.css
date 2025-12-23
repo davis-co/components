@@ -40,7 +40,7 @@
 }
 
 .error {
-  @apply font-400 text-2xs lg:text-xs text-error flex items-center gap-1 animate-bounce absolute right-0 -bottom-6 transform;
+  @apply font-400 text-2xs lg:text-xs text-error flex items-center gap-1 absolute right-0 -bottom-6 transform;
 }
 
 .field-error {

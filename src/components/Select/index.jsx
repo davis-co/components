@@ -33,6 +33,7 @@ export const Select = ({
   register,
   validation,
   placeholder,
+  useFormContext: _unusedUseFormContext,
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,13 +53,13 @@ export const Select = ({
         id={questionKey}
         className={classNames(
           inputClassName,
-          "text-2xs lg:text-xs rounded border-[0.5px] border-solid border-black hover:border-success font-400 py-1.5 !ring-0 hover:bg-white cursor-pointer outline-none w-full appearance-none",
+          "text-2xs md:text-xs  rounded border-[0.5px] border-solid border-black hover:border-success font-400 py-1 !ring-0 hover:bg-white cursor-pointer outline-none w-full appearance-none",
           en ? "p-2" : "pr-2", // فضا برای آیکون
           field?.value ? "!bg-white" : "bg-transparent"
         )}
         style={{
           // استایل برای dropdown بومی
-          borderRadius: '4px',
+          borderRadius: "4px",
         }}
         onChange={(e) => {
           const selectedValue =
@@ -74,12 +75,12 @@ export const Select = ({
         disabled={disabled}
         {...props}
       >
-        {defaultOptions.map((option) => (
+        {defaultOptions.map((option, index) => (
           <option
-            key={option.value}
+            key={option.value ?? `${option.label}-${index}`}
             value={option.value}
             className={classNames(
-              "text-2xs lg:text-xs p-2 bg-transparent border-[0.5px] border-solid border-black rounded-b",
+              "text-2xs lg:text-xs p-2  border-[0.5px] border-solid border-black rounded-b",
               optionClassName
             )}
           >
@@ -87,7 +88,7 @@ export const Select = ({
           </option>
         ))}
       </select>
-      
+
       {/* آیکون سفارشی */}
       <IoChevronDownOutline
         className={classNames(
@@ -130,7 +131,7 @@ export const Select = ({
         style={{
           boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.15)",
           // اضافه کردن overflow visible برای نمایش صحیح dropdown
-          overflow: 'visible'
+          overflow: "visible",
         }}
       >
         <Label
@@ -154,7 +155,7 @@ export const Select = ({
           <div className="relative w-full">
             <div
               className={classNames(
-                "flex items-center px-2 gap-2 justify-between w-full rounded border-[0.5px] border-black py-0.5 md:py-[3px] lg:py-[5px] cursor-pointer select-none",
+                "flex items-center px-2 gap-2 justify-between w-full rounded border-[0.5px] border-black py-0.5 md:py-[3px] cursor-pointer select-none",
                 value ? "!bg-white " : "bg-formItemInput"
               )}
               onClick={() => setIsOpen(!isOpen)}
@@ -187,9 +188,9 @@ export const Select = ({
                     <ul className="flex flex-col divide-y divide-solid divide-gray-200 max-h-[200px] overflow-y-scroll bg-[#f7f7f7] shadow-md">
                       {options
                         .filter((o) => o.label?.includes(searchValue))
-                        .map((o) => (
+                        .map((o, index) => (
                           <li
-                            key={o.label}
+                            key={o.value ?? `${o.label}-${index}`}
                             onClick={() => {
                               onChange(o.value);
                               setIsOpen(false);

@@ -96,7 +96,7 @@ export const DateInput = ({
               inputClass={
                 styles.dateInput +
                 " " +
-                `w-full font-400 text-2xs lg:text-xs xl:text-sm text-black
+                `w-full font-400 text-2xs lg:text-xs text-black
                                 placeholder:text-2xs lg:placeholder:text-xs bg-transparent border-none outline-none py-1 pr-1 lg:pr-1.5 hover:bg-white hover:border-black`
               }
               placeholder={placeholder}

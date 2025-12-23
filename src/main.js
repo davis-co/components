@@ -366,8 +366,8 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 
 //   return (
 //     <Page back={true}>
-//       <FormProvider {...methods}>
-//         {/* <CFCHeader
+//       <FormProvider {...methods} className="flex flex-col gap-4">
+//         <CFCHeader
 //           title={"مشخصات کاربر"}
 //           tableColumns={HeaderTableColumns}
 //           user={user}
@@ -384,7 +384,7 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 //             NID: 1,
 //             ID: 2,
 //           }}
-//         /> */}
+//         />
 //         <Select
 //           questionKey={"555"}
 //           options={HeaderTableColumns}
@@ -400,6 +400,7 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 //           useFormContext={useFormContext}
 //           questionKey="123"
 //           label="سوال"
+//           divider="right"
 //         />
 //         <Tab
 //           tabs={getTabs(methods.watch)}

@@ -59,7 +59,7 @@ export const Table = ({
                   key={index}
                   scope="col"
                   className={
-                    "bg-formItem shadow-md font-600 text-2xs lg:text-xs xl:text-sm text-center rounded-md px-4 py-2.5"
+                    "bg-formItem shadow-md font-600 text-2xs lg:text-xs text-center rounded-md px-4 py-1.5"
                   }
                 >
                   {colTitle}

@@ -84,13 +84,12 @@ export const Label = ({
         className={classNames(
           className,
           styles.label,
-          educationalContent?.show ? "pl-[20px]" : "",
-          // تغییر اصلی: استفاده از items-start به جای items-center
-          "flex items-start text-right font-700 text-black text-[11px] lg:text-xs xl:text-sm overflow-hidden",
+          educationalContent?.show ? "pl-[20px]" : " ",
+          "flex items-start text-right font-700 text-black text-[11px] lg:text-xs overflow-hidden",
           en
             ? styles.enLabel +
                 " " +
-                "relative flex items-start text-black text-2xs lg:text-xs xl:text-sm"
+                "relative flex items-start text-black text-2xs"
             : styles.label,
           "select-none w-full"
         )}
@@ -106,7 +105,7 @@ export const Label = ({
                   ? styles.truncatedTextEn +
                     " " +
                     "text-black text-2xs lg:text-xs xl:text-sm"
-                  : "font-700 text-black text-2xs lg:text-xs xl:text-sm"
+                  : "font-700 text-black"
               }
               style={{ whiteSpace: "nowrap", overflow: "hidden" }}
             >
@@ -126,8 +125,8 @@ export const Label = ({
                 en
                   ? styles.truncatedTextEn +
                     " " +
-                    "text-black text-2xs lg:text-xs xl:text-sm"
-                  : "font-700 text-black text-2xs lg:text-xs xl:text-sm"
+                    "text-black"
+                  : "font-700 text-black"
               }
             >
               {label}

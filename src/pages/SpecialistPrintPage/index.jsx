@@ -1,18 +1,18 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react"
-import { Button } from "../../components/Button"
-import { FieldSet } from "../../components/FieldSet"
-import { TextField } from "../../components/TextField"
-import { Table } from "../../components/Table"
-import { useForm } from "react-hook-form"
-import useDevice from "../../hooks/useDevice"
-import { Columns } from "./data"
-import moment from "jalali-moment"
-import { tableSizeList } from "../../components/Table/data"
-import { MdOutlinePersonSearch } from "react-icons/md"
-import { PiPrinterLight } from "react-icons/pi"
-import styles from "./styles.module.css"
-import NationalCodeSVG from "../../assets/icons/nationalCode.svg"
+import { useState } from "react";
+import { Button } from "../../components/Button";
+import { FieldSet } from "../../components/FieldSet";
+import { TextField } from "../../components/TextField";
+import { Table } from "../../components/Table";
+import { useForm } from "react-hook-form";
+import useDevice from "../../hooks/useDevice";
+import { Columns } from "./data";
+import moment from "jalali-moment";
+import { tableSizeList } from "../../components/Table/data";
+import { MdOutlinePersonSearch } from "react-icons/md";
+import { PiPrinterLight } from "react-icons/pi";
+import styles from "./styles.module.css";
+import NationalCodeSVG from "../../assets/icons/nationalCode.svg";
 
 export function SpecialistPrintPage({
   request = () => {},
@@ -29,13 +29,13 @@ export function SpecialistPrintPage({
     formState: { errors, isSubmitting },
   } = useForm({
     mode: "all",
-  })
-  const [device] = useDevice()
-  const [currentPage, setPage] = useState(1)
-  const [serviceLoading, setServiceLoading] = useState(false)
-  const [activePaziresh, setActivePaziresh] = useState(null)
-  const [tableSize, setTableSize] = useState(tableSizeList[0].value)
-  const { ogrid, setOgrid, setPazireshList, pazireshList } = contextData
+  });
+  const [device] = useDevice();
+  const [currentPage, setPage] = useState(1);
+  const [serviceLoading, setServiceLoading] = useState(false);
+  const [activePaziresh, setActivePaziresh] = useState(null);
+  const [tableSize, setTableSize] = useState(tableSizeList[0].value);
+  const { ogrid, setOgrid, setPazireshList, pazireshList } = contextData;
 
   const submit = () => {
     request({
@@ -49,31 +49,31 @@ export function SpecialistPrintPage({
     })
       .then((res) => {
         if (!res.error) {
-          setPazireshList(res.data)
+          setPazireshList(res.data);
           if (res.data.length == 0) {
-            toast.error("هیچ پذیرشی برای این کاربر ثبت نشده است.")
+            toast.error("هیچ پذیرشی برای این کاربر ثبت نشده است.");
           }
         } else {
-          toast.error("خطای دریافت اطلاعات" + " - " + res.error_code)
+          toast.error("خطای دریافت اطلاعات" + " - " + res.error_code);
         }
       })
-      .catch((err) => toast.error(err.message))
-  }
+      .catch((err) => toast.error(err.message));
+  };
 
   const entekhabPaziresh = (row, index) => {
-    setServiceLoading(true)
-    setActivePaziresh(index)
+    setServiceLoading(true);
+    setActivePaziresh(index);
     request({
       jobId: 173,
       dataInfo: { 1545718677214: row[1545718677214] },
     })
       .then((res) => {
-        const realResponse = parse(res)
-        setOgrid(realResponse.data[0].ogrid)
+        const realResponse = parse(res);
+        setOgrid(realResponse.data[0].ogrid);
       })
       .catch((err) => toast.error(err.message))
-      .finally(() => setServiceLoading(false))
-  }
+      .finally(() => setServiceLoading(false));
+  };
 
   return (
     <div className="flex h-full flex-col justify-between">
@@ -94,11 +94,13 @@ export function SpecialistPrintPage({
             onSubmit={handleSubmit(submit)}
           >
             <TextField
-              label={"کد ملی" + " :"}
+              label={"کد ملی"}
               questionKey="6620"
+              labelClassName="!w-fit"
               containerClassName={
-                "!flex-row rounded md:!w-[328px] !gap-5 group"
+                "!flex !flex-row justify-between items-center gap-4"
               }
+              inputClassName={"!flex-1 py-1.5"}
               className="flex-1"
               icon={<img src={NationalCodeSVG} />}
               watch={watch}
@@ -107,7 +109,7 @@ export function SpecialistPrintPage({
             />
             <Button
               title={"جستجو"}
-              className="!gap-2 !shadow-sm !bg-[#f7f7f7] !text-black !border-success hover:!bg-success hover:!text-white transition-all !w-[94px] md:h-[28px] xl:h-[34px]"
+              className="!gap-2 !shadow-sm !bg-[#f7f7f7] !text-black !border-success hover:!bg-success hover:!text-white transition-all !w-[94px] py-3 px-2"
               type="submit"
               icon={<MdOutlinePersonSearch className="text-sm lg:text-xl" />}
               loading={isSubmitting}
@@ -210,15 +212,15 @@ export function SpecialistPrintPage({
         )}
       </FieldSet>
     </div>
-  )
+  );
 }
 
 const check_print_condition = (services, keys) => {
-  let rs = false
+  let rs = false;
   for (let i in services)
     if (keys.includes(services[i][20336].id)) {
-      rs = true
-      break
+      rs = true;
+      break;
     }
-  return rs
-}
+  return rs;
+};

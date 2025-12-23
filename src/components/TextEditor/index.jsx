@@ -1,8 +1,6 @@
-/* eslint-disable react/prop-types */
 import classNames from "classnames";
-import { Divider } from "../Divider";
-import { Label } from "../Label";
-import { BiError } from "react-icons/bi";
+import { BiError, BiFullscreen, BiExitFullscreen } from "react-icons/bi";
+import { HiOutlinePrinter } from "react-icons/hi";
 import {
   useState,
   useEffect,
@@ -10,369 +8,383 @@ import {
   forwardRef,
   useImperativeHandle,
 } from "react";
+
 import styles from "./styles.module.css";
-import { HiOutlinePrinter } from "react-icons/hi";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { LABEL_DIRECTION_MAP } from "./constants";
+import {
+  createEditorStateFromValue,
+  convertEditorStateToHTML,
+  createStyleMap,
+  createHandlePastedText,
+} from "./editorHelpers";
+import { Divider } from "../Divider";
+import { Label } from "../Label";
 import { printThis } from "../../utils/printThis";
-// import { EditorState } from "draft-js";
 
-export const TextEditor = forwardRef(
-  (
-    {
-      questionKey,
-      useFormContext,
-      validation,
-      label,
-      disabled,
-      labelClassName,
-      divider,
-      userGuide,
-      educationalContent,
-      archive,
-      labelMore,
-      dividerClassName,
-      containerClassName,
-      wrapperClassName,
-      editorClassName,
-      toolbarClassName,
-    },
-    ref
-  ) => {
-    const toolbarColors = [
-      "rgb(97,189,109)",
-      "rgb(26,188,156)",
-      "rgb(84,172,210)",
-      "rgb(44,130,201)",
-      "rgb(147,101,184)",
-      "rgb(71,85,119)",
-      "rgb(204,204,204)",
-      "rgb(65,168,95)",
-      "rgb(0,168,133)",
-      "rgb(61,142,185)",
-      "rgb(41,105,176)",
-      "rgb(85,57,130)",
-      "rgb(40,50,78)",
-      "rgb(0,0,0)",
-      "rgb(247,218,100)",
-      "rgb(251,160,38)",
-      "rgb(235,107,86)",
-      "rgb(226,80,65)",
-      "rgb(163,143,132)",
-      "rgb(239,239,239)",
-      "rgb(255,255,255)",
-      "rgb(250,197,28)",
-      "rgb(243,121,52)",
-      "rgb(209,72,65)",
-      "rgb(184,49,47)",
-      "rgb(124,112,107)",
-      "rgb(209,213,216)",
-    ];
+export const TextEditor = forwardRef((props, ref) => {
+  const {
+    questionKey,
+    useFormContext,
+    validation,
+    label,
+    disabled,
+    labelClassName,
+    divider,
+    userGuide,
+    educationalContent,
+    archive,
+    labelMore,
+    dividerClassName,
+    containerClassName,
+    wrapperClassName,
+    editorClassName,
+    toolbarClassName,
+  } = props;
 
-    const {
-      watch,
-      setValue,
-      register,
-      formState: { errors },
-    } = useFormContext();
+  const {
+    watch,
+    setValue,
+    register,
+    formState: { errors },
+  } = useFormContext();
 
-    const [editorState, setEditorState] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const EditorRef = useRef(null);
+  const [editorState, setEditorState] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
-    // const handleAppendText = (value) => {
-    //   if (!editorState) return;
+  const EditorRef = useRef(null);
+  const containerRef = useRef(null);
+  const editorUtils = useRef({});
+  const isInternalChange = useRef(false);
 
-    //   const contentState = editorState.getCurrentContent();
-    //   const selection = editorState.getSelection();
-    //   const newText = value;
+  const formValue = watch(questionKey);
+  const error = errors?.[questionKey]?.message || null;
 
-    //   const newContentState = Modifier.insertText(
-    //     contentState,
-    //     selection,
-    //     newText
-    //   );
+  // ==================== HELPER REFERENCES ====================
 
-    //   const newEditorState = EditorState.push(
-    //     editorState,
-    //     newContentState,
-    //     "insert-characters"
-    //   );
+  const getEditorStateFromValue = (value) => {
+    const nextState = createEditorStateFromValue(value, editorUtils.current);
 
-    //   setEditorState(newEditorState);
+    if (nextState) return nextState;
 
-    //   const html = window.stateToHTML(newContentState);
-    //   setValue(questionKey, html, { shouldValidate: true });
-    // };
-    const handleAppendText = (value) => {
-      if (!editorState) return;
-    
-      const contentState = editorState.getCurrentContent();
-      const selection = editorState.getSelection();
-    
-      const endKey = contentState.getLastBlock().getKey();
-      const endLength = contentState.getLastBlock().getLength();
-    
-      const lastBlockText = contentState.getLastBlock().getText();
-    
-    
-      const newSelection = selection.merge({
-        anchorKey: endKey,
-        anchorOffset: endLength,
-        focusKey: endKey,
-        focusOffset: endLength,
-        isBackward: false,
+    return editorUtils.current.EditorState
+      ? editorUtils.current.EditorState.createEmpty()
+      : null;
+  };
+
+  // ==================== HANDLERS ====================
+
+  const handleEditorChange = (newState) => {
+    isInternalChange.current = true;
+    setEditorState(newState);
+
+    const htmlValue = convertEditorStateToHTML(newState, editorUtils.current);
+
+    if (htmlValue !== null) {
+      setValue(questionKey, htmlValue, {
+        shouldValidate: true,
       });
-    
-      const insertText =  value;
-    
-      const newContentState = Modifier.insertText(
-        contentState,
-        newSelection,
-        insertText
-      );
-    
-      const newEditorState = EditorState.push(
-        editorState,
-        newContentState,
-        "insert-characters"
-      );
-    
-      setEditorState(newEditorState);
-    
-      const html = window.stateToHTML(newContentState);
-      setValue(questionKey, html, { shouldValidate: true });
-    };
-    
-    const clear = () => {
-      setEditorState(EditorState.createEmpty());
-      setValue(questionKey, "", { shouldValidate: true });
-    };
-
-    useEffect(() => {
-      register(questionKey, validation);
-
-      const loadEditorLibraries = async () => {
-        try {
-          const [
-            { Editor },
-            {
-              EditorState,
-              convertToRaw,
-              Modifier,
-              ContentState,
-              convertFromRaw,
-            },
-            htmlToDraftModule,
-            { stateToHTML },
-          ] = await Promise.all([
-            import("react-draft-wysiwyg"),
-            import("draft-js"),
-            import("html-to-draftjs"),
-            import("draft-js-export-html"),
-          ]);
-
-          // Assign the dynamically imported components/functions
-          EditorRef.current = Editor;
-          const htmlToDraft = htmlToDraftModule.default;
-
-          // Initialize editor state
-          const getEditorState = () => {
-            const value = watch(questionKey);
-            if (!value) return EditorState.createEmpty();
-
-            try {
-              if (typeof value === "string") {
-                const parsedValue = JSON.parse(value);
-                if (parsedValue.blocks) {
-                  return EditorState.createWithContent(
-                    convertFromRaw(parsedValue)
-                  );
-                }
-              }
-            } catch (error) {
-              console.warn("Text editor error");
-            }
-
-            // If JSON parsing fails, assume it's HTML
-            const blocksFromHTML = htmlToDraft(value);
-            if (blocksFromHTML) {
-              const contentState = ContentState.createFromBlockArray(
-                blocksFromHTML.contentBlocks,
-                blocksFromHTML.entityMap
-              );
-              return EditorState.createWithContent(contentState);
-            }
-
-            return EditorState.createEmpty();
-          };
-
-          setEditorState(getEditorState());
-          setIsLoading(false);
-
-          // Save stateToHTML for later use
-          window.stateToHTML = stateToHTML;
-          window.convertToRaw = convertToRaw;
-          window.Modifier = Modifier;
-          window.EditorState = EditorState;
-        } catch (error) {
-          console.error("Failed to load editor libraries:", error);
-        }
-      };
-
-      loadEditorLibraries();
-    }, []);
-
-    // Now move useImperativeHandle BELOW handleAppendText
-    useImperativeHandle(ref, () => ({
-      appendText: handleAppendText,
-      clear: clear,
-    }));
-
-    const handleEditorChange = (newState) => {
-      setEditorState(newState);
-      const contentState = newState.getCurrentContent();
-
-      // Convert editor state to HTML while preserving inline styles
-      const html = window.stateToHTML(contentState, {
-        inlineStyleFn: (styles) => {
-          const colorStyle = styles.find((style) =>
-            style.startsWith("color-rgb")
-          );
-          const fontSizeStyle = styles.find((style) =>
-            style.startsWith("fontsize-")
-          );
-
-          const styleObject = {};
-
-          if (colorStyle) {
-            styleObject.color = colorStyle.replace("color-", "");
-          }
-
-          if (fontSizeStyle) {
-            styleObject.fontSize =
-              fontSizeStyle.replace("fontsize-", "") + "px";
-          }
-
-          return Object.keys(styleObject).length
-            ? { style: styleObject }
-            : null;
-        },
-        blockStyleFn: (block) => {
-          const alignment = block.getData()?.get("text-align");
-          if (alignment) {
-            return { style: { textAlign: alignment } };
-          }
-        },
-      });
-
-      setValue(questionKey, html, { shouldValidate: true });
-    };
-
-    // Update your style map to match exactly what's in the editor
-    const styleMap = toolbarColors.reduce((styles, color) => {
-      styles[`COLOR_${color}`] = {
-        color: color.startsWith("#") ? color : `rgb(${color})`,
-      };
-      return styles;
-    }, {});
-
-    const error = errors?.[questionKey] ? errors?.[questionKey]?.message : null;
-
-    const labelDirectionStyle = {
-      center: "label-center",
-      right: "label-right",
-      left: "label-left",
-    };
-
-    if (isLoading) {
-      return <div className="text-center py-4">Loading editor...</div>;
     }
 
-    const Editor = EditorRef.current;
+    setTimeout(() => {
+      isInternalChange.current = false;
+    }, 0);
+  };
 
-    const Print = () => {
-      return (
-        <div
-          className="rdw-link-wrapper"
-          aria-label="rdw-link-control"
-          onClick={() => printThis("", watch(questionKey))}
-        >
-          <div className="rdw-option-wrapper" title="print">
-            <HiOutlinePrinter className="xs:text-sm lg:text-xl" />
-          </div>
-        </div>
-      );
+  const handlePastedText = (text, _html, currentEditorState) => {
+    return createHandlePastedText({
+      editorUtils: editorUtils.current,
+      handleEditorChange,
+    })(text, _html, currentEditorState);
+  };
+
+  const handleAppendText = (value) => {
+    if (!editorState || !editorUtils.current.Modifier) return;
+
+    isInternalChange.current = true;
+
+    const { Modifier, EditorState } = editorUtils.current;
+    const contentState = editorState.getCurrentContent();
+    const lastBlock = contentState.getLastBlock();
+
+    const newSelection = editorState.getSelection().merge({
+      anchorKey: lastBlock.getKey(),
+      anchorOffset: lastBlock.getLength(),
+      focusKey: lastBlock.getKey(),
+      focusOffset: lastBlock.getLength(),
+      isBackward: false,
+    });
+
+    const newContentState = Modifier.insertText(
+      contentState,
+      newSelection,
+      value
+    );
+    const newEditorState = EditorState.push(
+      editorState,
+      newContentState,
+      "insert-characters"
+    );
+
+    setEditorState(newEditorState);
+    const htmlValue = convertEditorStateToHTML(
+      newEditorState,
+      editorUtils.current
+    );
+    setValue(questionKey, htmlValue ?? "", {
+      shouldValidate: true,
+    });
+
+    setTimeout(() => {
+      isInternalChange.current = false;
+    }, 0);
+  };
+
+  const clear = () => {
+    if (!editorUtils.current.EditorState) return;
+
+    isInternalChange.current = true;
+    setEditorState(editorUtils.current.EditorState.createEmpty());
+    setValue(questionKey, "", { shouldValidate: true });
+
+    setTimeout(() => {
+      isInternalChange.current = false;
+    }, 0);
+  };
+
+  const handlePrint = () => {
+    const content = watch(questionKey);
+    if (content) printThis("", content);
+  };
+
+  const enterFullscreen = async () => {
+    if (!containerRef.current) return;
+    try {
+      await containerRef.current.requestFullscreen({ navigationUI: "hide" });
+    } catch (e) {
+      console.warn("Fullscreen failed:", e);
+    }
+  };
+
+  const exitFullscreen = async () => {
+    try {
+      if (document.fullscreenElement) await document.exitFullscreen();
+    } catch (e) {
+      console.warn("Exit fullscreen failed:", e);
+    }
+  };
+
+  // ==================== EFFECTS ====================
+
+  useEffect(() => {
+    register(questionKey, validation);
+
+    const loadEditor = async () => {
+      try {
+        const [
+          { Editor },
+          { EditorState, convertToRaw, Modifier, ContentState, convertFromRaw },
+          htmlToDraftModule,
+          { stateToHTML },
+        ] = await Promise.all([
+          import("react-draft-wysiwyg"),
+          import("draft-js"),
+          import("html-to-draftjs"),
+          import("draft-js-export-html"),
+        ]);
+
+        EditorRef.current = Editor;
+        editorUtils.current = {
+          stateToHTML,
+          convertToRaw,
+          Modifier,
+          EditorState,
+          ContentState,
+          convertFromRaw,
+          htmlToDraft: htmlToDraftModule.default,
+        };
+
+        const initialState = getEditorStateFromValue(watch(questionKey));
+        if (initialState) {
+          setEditorState(initialState);
+        }
+        setIsLoading(false);
+      } catch (err) {
+        console.error("Failed to load editor:", err);
+      }
     };
 
-    return (
-      <div
-        className={classNames(
-          "w-full flex flex-col relative bg-formItem p-2 rounded",
-          containerClassName,
-          error ? "field-error" : ""
-        )}
-        style={{
-          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.15)",
-        }}
-      >
-        {label && (
-          <Label
-            className={classNames(labelClassName, labelDirectionStyle[divider])}
-            userGuide={userGuide}
-            educationalContent={educationalContent}
-            archive={archive ? { ...archive, questionKey } : false}
-            label={label}
-            required={validation ? validation.required : null}
-            more={labelMore}
-            disabled={disabled}
-          />
-        )}
-        {divider && (
-          <Divider
-            className={classNames(dividerClassName)}
-            position={divider}
-          />
-        )}
+    loadEditor();
+  }, [register, questionKey, validation, watch]);
 
-        {/* Rich Text Editor */}
-        <Editor
-          toolbar={{
-            options: [
-              "inline",
-              "blockType",
-              "fontSize",
-              "list",
-              "textAlign",
-              "colorPicker",
-              "link",
-              // "embedded",
-              "emoji",
-              "image",
-              "remove",
-              "history",
-            ],
-            textAlign: {
-              inDropdown: false,
-              options: ["left", "center", "right", "justify"],
-            },
-          }}
-          editorState={editorState}
-          toolbarClassName={styles.toolbar + " " + toolbarClassName}
-          wrapperClassName={styles.wrapper + " " + wrapperClassName}
-          editorClassName={
-            styles.editor + " " + editorClassName + " " + "prose min-w-full"
-          }
-          onEditorStateChange={handleEditorChange} // Update form state
-          readOnly={disabled}
-          toolbarCustomButtons={[<Print />]}
-          customStyleMap={styleMap}
-        />
-        {error && (
-          <span className="error">
-            <BiError className="text-xs lg:text-base" />
-            {error}
-          </span>
+  // Sync form value to editor
+  useEffect(() => {
+    if (
+      isLoading ||
+      !editorState ||
+      !editorUtils.current.EditorState ||
+      isInternalChange.current
+    ) {
+      return;
+    }
+
+    const currentHtml = convertEditorStateToHTML(
+      editorState,
+      editorUtils.current
+    );
+    if (formValue !== currentHtml && formValue !== undefined) {
+      const nextState = getEditorStateFromValue(formValue);
+      if (nextState) {
+        setEditorState(nextState);
+      }
+    }
+  }, [formValue, isLoading, editorState]);
+
+  // Fullscreen tracking
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const active = document.fullscreenElement === containerRef.current;
+      setIsFullscreen(active);
+      document.body.style.overflow = active ? "hidden" : "";
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () =>
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
+
+  useImperativeHandle(ref, () => ({ appendText: handleAppendText, clear }));
+
+  // ==================== TOOLBAR BUTTONS ====================
+
+  const PrintButton = () => (
+    <div
+      className="rdw-link-wrapper"
+      aria-label="rdw-link-control"
+      onClick={handlePrint}
+    >
+      <div className="rdw-option-wrapper" title="print">
+        <HiOutlinePrinter className="xs:text-sm lg:text-xl" />
+      </div>
+    </div>
+  );
+
+  const FullscreenButton = () => (
+    <div
+      className="rdw-link-wrapper"
+      aria-label="rdw-link-control"
+      onClick={isFullscreen ? exitFullscreen : enterFullscreen}
+    >
+      <div
+        className="rdw-option-wrapper"
+        title={isFullscreen ? "minimize" : "fullsize"}
+      >
+        {isFullscreen ? (
+          <BiExitFullscreen className="xs:text-sm lg:text-xl" />
+        ) : (
+          <BiFullscreen className="xs:text-sm lg:text-xl" />
         )}
       </div>
-    );
+    </div>
+  );
+
+  // ==================== RENDER ====================
+
+  if (isLoading) {
+    return <div className="text-center py-4">Loading editor...</div>;
   }
-);
+
+  const Editor = EditorRef.current;
+
+  return (
+    <div
+      ref={containerRef}
+      className={classNames(
+        "w-full flex flex-col relative bg-formItem p-2 rounded",
+        containerClassName,
+        error && "field-error",
+        isFullscreen && styles.fullscreen
+      )}
+      style={{ boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.15)" }}
+    >
+      {label && (
+        <Label
+          className={classNames(labelClassName, LABEL_DIRECTION_MAP[divider])}
+          userGuide={userGuide}
+          educationalContent={educationalContent}
+          archive={archive ? { ...archive, questionKey } : false}
+          label={label}
+          required={validation?.required || null}
+          more={labelMore}
+          disabled={disabled}
+        />
+      )}
+
+      {divider && <Divider className={dividerClassName} position={divider} />}
+
+      <Editor
+        toolbar={{
+          options: [
+            "inline",
+            "blockType",
+            "fontSize",
+            "fontFamily",
+            "list",
+            "textAlign",
+            "colorPicker",
+            "link",
+            "emoji",
+            "image",
+            "remove",
+            "history",
+          ],
+          textAlign: {
+            inDropdown: false,
+            options: ["left", "center", "right", "justify"],
+          },
+          fontFamily: {
+            options: [
+              "Arial",
+              "Times New Roman",
+              "Tahoma",
+              "Verdana",
+              "Courier New",
+            ],
+          },
+        }}
+        editorState={editorState}
+        toolbarClassName={classNames(styles.toolbar, toolbarClassName)}
+        wrapperClassName={classNames(
+          styles.wrapper,
+          wrapperClassName,
+          isFullscreen && styles.wrapperFull
+        )}
+        editorClassName={classNames(
+          styles.editor,
+          editorClassName,
+          "min-w-full",
+          isFullscreen && "h-full"
+        )}
+        onEditorStateChange={handleEditorChange}
+        readOnly={disabled}
+        toolbarCustomButtons={[
+          <PrintButton key="print" />,
+          <FullscreenButton key="fullscreen" />,
+        ]}
+        customStyleMap={createStyleMap()}
+        handlePastedText={handlePastedText}
+        stripPastedStyles={true}
+      />
+
+      {error && (
+        <span className="error">
+          <BiError className="text-xs lg:text-base" />
+          {error}
+        </span>
+      )}
+    </div>
+  );
+});
+
+TextEditor.displayName = "TextEditor";
