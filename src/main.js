@@ -1,5 +1,4 @@
 import "./index.css";
-import { ArchiveHeader } from "./pages/SpecialistFormPage/layouts/ArchiveHeader/index.jsx";
 export { Button } from "./components/Button/index.jsx";
 export { Divider } from "./components/Divider/index.jsx";
 export { Dropdown } from "./components/Dropdown/index.jsx";
@@ -22,7 +21,7 @@ export { FileField } from "./components/FileField/index.jsx";
 export { ProgressChart } from "./components/Charts/Progress.jsx";
 export { TextEditor } from "./components/TextEditor/index.jsx";
 export { Tab } from "./components/Tab/index.jsx";
-layouts
+layouts;
 export { ArchiveTable } from "./layouts/ArchiveTable/index.jsx";
 export { EmptyForm } from "./layouts/EmptyForm/index.jsx";
 export { FormFields } from "./layouts/FormFields/index.jsx";
@@ -33,7 +32,7 @@ export { SpecialistDashboardPage } from "./pages/SpecialistDashboardPage/index.j
 export { SpecialistPrintPage } from "./pages/SpecialistPrintPage/index.jsx";
 // sections
 export { Prescription } from "./sections/Prescription/index.jsx";
-export {ArchiveHeader} from "./pages/SpecialistFormPage/layouts/ArchiveHeader/index.jsx"
+export { ArchiveHeader } from "./pages/SpecialistFormPage/layouts/ArchiveHeader/index.jsx";
 
 // import ReactDOM from "react-dom/client";
 // import "./index.css";
@@ -57,7 +56,6 @@ export {ArchiveHeader} from "./pages/SpecialistFormPage/layouts/ArchiveHeader/in
 // import { DateInput } from "./components/DateInput/index.jsx";
 // import moment from "jalali-moment";
 // import { Label } from "./components/Label/index.jsx";
-// import { ArchiveHeader } from "./pages/SpecialistFormPage/layouts/ArchiveHeader";
 
 // export const text = {
 //   pMHx: "PMHx ",
