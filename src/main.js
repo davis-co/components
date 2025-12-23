@@ -32,7 +32,7 @@ export { SpecialistDashboardPage } from "./pages/SpecialistDashboardPage/index.j
 export { SpecialistPrintPage } from "./pages/SpecialistPrintPage/index.jsx";
 // sections
 export { Prescription } from "./sections/Prescription/index.jsx";
-export { ArchiveHeader } from "./pages/SpecialistFormPage/layouts/ArchiveHeader/index.jsx";
+export { ArchiveHeader } from "./pages/ArchiveHeader/index.jsx";
 
 // import ReactDOM from "react-dom/client";
 // import "./index.css";
