@@ -21,7 +21,7 @@ export { FileField } from "./components/FileField/index.jsx";
 export { ProgressChart } from "./components/Charts/Progress.jsx";
 export { TextEditor } from "./components/TextEditor/index.jsx";
 export { Tab } from "./components/Tab/index.jsx";
-layouts;
+// layouts
 export { ArchiveTable } from "./layouts/ArchiveTable/index.jsx";
 export { EmptyForm } from "./layouts/EmptyForm/index.jsx";
 export { FormFields } from "./layouts/FormFields/index.jsx";
@@ -56,6 +56,7 @@ export { ArchiveHeader } from "./pages/SpecialistFormPage/layouts/ArchiveHeader/
 // import { DateInput } from "./components/DateInput/index.jsx";
 // import moment from "jalali-moment";
 // import { Label } from "./components/Label/index.jsx";
+// import { ArchiveHeader } from "./pages/SpecialistFormPage/layouts/ArchiveHeader/index.jsx";
 
 // export const text = {
 //   pMHx: "PMHx ",
@@ -485,14 +486,14 @@ export { ArchiveHeader } from "./pages/SpecialistFormPage/layouts/ArchiveHeader/
 //           parse={parse}
 //           contextData={contextData}
 //         />
-//         {/* <ArchiveHeader
-//           title="استعلام اطلاعات فرد"
-//           request={request}
+//         <ArchiveHeader
+//           title="آرشیو اسپیرومتری"
+//           request={""}
 //           user={user}
 //           setUser={setUser}
 //           qbc={"qbc"}
-//           toast={toast}
-//         /> */}
+//           toast={""}
+//         />
 //       </FormProvider>
 //     </Page>
 //   );

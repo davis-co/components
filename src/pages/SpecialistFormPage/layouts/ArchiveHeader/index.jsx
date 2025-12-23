@@ -17,7 +17,7 @@ export const ArchiveHeader = ({
   qbc,
 }) => {
   const [formData, setFormData] = useState({
-    6620: "", 
+    6620: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -55,7 +55,8 @@ export const ArchiveHeader = ({
 
       if (res?.error) {
         toast?.error?.(
-          "خطای دریافت اطلاعات" + (res?.error_code ? ` - ${res.error_code}` : "")
+          "خطای دریافت اطلاعات" +
+            (res?.error_code ? ` - ${res.error_code}` : "")
         );
         setUser?.(null);
         return;
@@ -98,19 +99,16 @@ export const ArchiveHeader = ({
           }
         >
           <form
-            className={"flex w-full items-end bg-background"}
+            className={"flex w-full justify-center items-end bg-background"}
             onSubmit={onSubmit}
           >
-            <div className="flex w-full flex-wrap items-end gap-x-2 md:gap-x-[1vw] lg:gap-x-2 gap-y-3 md:gap-y-4">
+            <div className="flex w-full items-end gap-4">
               <TextField
                 containerClassName={
-                  "flex flex-1 min-w-[46%] !rounded-[3px] md:min-w-[180px] md:max-w-[260px] md:ml-auto !p-0 !bg-transparent !gap-0.5 !shadow-none"
+                  "flex flex-1 md:ml-auto !p-0 !bg-transparent !gap-0.5 !shadow-none"
                 }
                 className={
                   "!border-[0.25px] !rounded-[3px] lg:!rounded w-full bg-[#f7f7f7]"
-                }
-                inputClassName={
-                  "md:text-3xs md:placeholder:text-3xs lg:placeholder:text-xs lg:text-xs"
                 }
                 name={"6620"}
                 placeholder={"کد ملی را وارد کنید"}
@@ -123,7 +121,7 @@ export const ArchiveHeader = ({
 
               <div
                 className={
-                  "flex border-success w-[96px] lg:w-[115px] ml-auto md:ml-0 mt-2 md:mt-0 mr-auto md:mr-0 bg-[#f7f7f7] !rounded-[2px]"
+                  "flex border-success w-[96px]"
                 }
               >
                 {refreshActive ? (
@@ -148,7 +146,7 @@ export const ArchiveHeader = ({
 
                 <Button
                   variant="outlined"
-                  title={"استعلام"}
+                  title={"جستجو"}
                   type="submit"
                   loading={loading}
                   className={classNames(
