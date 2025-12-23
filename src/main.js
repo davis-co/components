@@ -1,4 +1,5 @@
 import "./index.css";
+import { ArchiveHeader } from "./pages/SpecialistFormPage/layouts/ArchiveHeader/index.jsx";
 export { Button } from "./components/Button/index.jsx";
 export { Divider } from "./components/Divider/index.jsx";
 export { Dropdown } from "./components/Dropdown/index.jsx";
@@ -32,6 +33,7 @@ export { SpecialistDashboardPage } from "./pages/SpecialistDashboardPage/index.j
 export { SpecialistPrintPage } from "./pages/SpecialistPrintPage/index.jsx";
 // sections
 export { Prescription } from "./sections/Prescription/index.jsx";
+export {ArchiveHeader} from "./pages/SpecialistFormPage/layouts/ArchiveHeader/index.jsx"
 
 // import ReactDOM from "react-dom/client";
 // import "./index.css";
@@ -55,6 +57,7 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 // import { DateInput } from "./components/DateInput/index.jsx";
 // import moment from "jalali-moment";
 // import { Label } from "./components/Label/index.jsx";
+// import { ArchiveHeader } from "./pages/SpecialistFormPage/layouts/ArchiveHeader";
 
 // export const text = {
 //   pMHx: "PMHx ",
@@ -484,6 +487,14 @@ export { Prescription } from "./sections/Prescription/index.jsx";
 //           parse={parse}
 //           contextData={contextData}
 //         />
+//         {/* <ArchiveHeader
+//           title="استعلام اطلاعات فرد"
+//           request={request}
+//           user={user}
+//           setUser={setUser}
+//           qbc={"qbc"}
+//           toast={toast}
+//         /> */}
 //       </FormProvider>
 //     </Page>
 //   );
