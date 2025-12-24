@@ -1,14 +1,113 @@
 /* eslint-disable react/prop-types */
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import classNames from "classnames";
 import { FaFileCircleXmark } from "react-icons/fa6";
 import { MdOutlineFileUpload } from "react-icons/md";
-import { Button } from "../Button";
-import { Radio } from "../Radio";
-import { Label } from "../Label";
-import { Divider } from "../Divider";
 import { BiError } from "react-icons/bi";
 import styles from "./styles.module.css";
+import { Label } from "../Label";
+import { Divider } from "../Divider";
+import { Button } from "../Button";
+
+// --- START: Simple Modal Component (Replace with davis-components Modal if available) ---
+const Modal = ({ isOpen, onClose, children, title = "" }) => {
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  const modalContent = (
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.6)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 9999, // Very high z-index to ensure it's on top
+        padding: "20px",
+        boxSizing: "border-box",
+      }}
+      onClick={(e) => {
+        // Close modal when clicking on overlay
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
+    >
+      <div
+        style={{
+          backgroundColor: "white",
+          padding: "20px",
+          borderRadius: "8px",
+          width: "100%",
+          height: "100%",
+          maxWidth: "95vw",
+          maxHeight: "95vh",
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          boxSizing: "border-box",
+        }}
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "15px",
+            flexShrink: 0,
+          }}
+        >
+          {title && <h3 style={{ margin: 0 }}>{title}</h3>}
+          <button
+            onClick={onClose}
+            style={{
+              background: "none",
+              border: "none",
+              fontSize: "2rem",
+              cursor: "pointer",
+              lineHeight: 1,
+              padding: 0,
+              color: "#333",
+            }}
+          >
+            &times;
+          </button>
+        </div>
+        <div
+          style={{
+            flexGrow: 1,
+            overflow: "hidden",
+            display: "flex",
+            minHeight: 0,
+            flexDirection: "column",
+          }}
+        >
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+
+  // Use portal to render modal directly in body, avoiding any parent overflow/positioning issues
+  return createPortal(modalContent, document.body);
+};
+// --- END: Simple Modal Component ---
 
 export const FileField = ({
   value,
@@ -37,7 +136,11 @@ export const FileField = ({
 }) => {
   const error = errors?.[questionKey] ? errors?.[questionKey]?.message : null;
 
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false); // For delete confirmation
+  const [showFileViewerModal, setShowFileViewerModal] = useState(false); // For file display modal
+  const [fileUrlForModal, setFileUrlForModal] = useState(null); // Stores URL for the viewer modal
+  const [fileObjectForModal, setFileObjectForModal] = useState(null); // Stores file object for type detection
+
   const inputRef = useRef(null);
   const _value = watch ? watch(questionKey) : value;
 
@@ -48,37 +151,82 @@ export const FileField = ({
     } else {
       onChange(file);
     }
+    // If a new file is selected, ensure the viewer modal is closed
+    setShowFileViewerModal(false);
+    if (fileUrlForModal?.startsWith("blob:")) {
+      URL.revokeObjectURL(fileUrlForModal);
+    }
+    setFileUrlForModal(null);
+    setFileObjectForModal(null);
   };
 
-  const winOpen = (link) => {
-    const url = `${baseURL}/${link}`;
-    window.open(url, "_blank");
+  // Helper function to check if file is an image
+  const isImageFile = (fileUrl, fileObject = null) => {
+    // First check if it's a File object with type
+    if (fileObject instanceof File) {
+      return fileObject.type.startsWith("image/");
+    }
+
+    // Then check URL extension
+    if (!fileUrl) return false;
+    const imageExtensions = [
+      ".jpg",
+      ".jpeg",
+      ".png",
+      ".gif",
+      ".bmp",
+      ".webp",
+      ".svg",
+    ];
+    const lowerUrl = fileUrl.toLowerCase();
+    return (
+      imageExtensions.some((ext) => lowerUrl.includes(ext)) ||
+      lowerUrl.match(/\.(jpg|jpeg|png|gif|bmp|webp|svg)(\?|$)/i)
+    );
   };
 
+  // Modified to open the file in our new modal
   const handleDisplayFile = () => {
     const fileLink = _value;
+    let urlToDisplay = null;
+
     if (typeof fileLink === "string") {
-      winOpen(fileLink);
-    } else if (fileLink) {
-      window.open(URL.createObjectURL(fileLink), "_blank");
+      // If _value is already a string (likely a path from the server)
+      urlToDisplay = `${baseURL}/${fileLink}`;
+    } else if (fileLink instanceof File || fileLink instanceof Blob) {
+      // If _value is a File object (e.g., before upload)
+      urlToDisplay = URL.createObjectURL(fileLink);
+    }
+
+    if (urlToDisplay) {
+      setFileUrlForModal(urlToDisplay);
+      setFileObjectForModal(fileLink instanceof File ? fileLink : null);
+      setShowFileViewerModal(true);
+    } else {
+      console.warn("No file or valid file path found to display.");
+      // Optionally show an error message to the user
     }
   };
 
   const deleteFile = () => {
-    setOpenModal(true);
+    setOpenModal(true); // Open the delete confirmation modal
   };
 
-  const handleRadioChange = (value) => {
-    if (value === "10361") {
+  const handleRadioChange = (val) => {
+    if (val === "10361") {
+      // "Yes" to delete
       const resetFile = "";
       if (setValue) {
         setValue(questionKey, resetFile);
       } else {
         onChange(resetFile);
       }
-      setOpenModal(false);
-    } else if (value === "10362") {
-      setOpenModal(false);
+      setOpenModal(false); // Close delete confirmation modal
+      setShowFileViewerModal(false); // Also close the viewer if open
+      setFileUrlForModal(null); // Clear the file URL
+    } else if (val === "10362") {
+      // "No" to delete
+      setOpenModal(false); // Close delete confirmation modal
     }
   };
 
@@ -114,7 +262,12 @@ export const FileField = ({
     if (register && validation) {
       register(questionKey, validation);
     }
-  }, []);
+  }, [register, validation, questionKey]); // Added dependencies
+
+  const handleFileView = (link) => {
+    const url = `${baseURL}/${link}`;
+    window.open(url, "_blank");
+  };
 
   return (
     <div
@@ -141,12 +294,13 @@ export const FileField = ({
               ? {
                   ...archive,
                   questionKey,
+                  // Modified renderCell to use handleDisplayFile for direct file view
                   renderCell:
                     archive.renderCell ||
                     ((val) => (
                       <span
-                        className="text-success"
-                        onClick={() => winOpen(val.slice(1, -1))}
+                        className="text-success cursor-pointer" // Added cursor-pointer
+                        onClick={() => handleFileView(val)} // Pass URL to open in modal
                       >
                         {"نمایش فایل"}
                       </span>
@@ -182,6 +336,7 @@ export const FileField = ({
           onClick={() =>
             _value ? handleDisplayFile() : inputRef.current.click()
           }
+          disabled={disabled} // Disable button if FileField is disabled
         />
 
         <div
@@ -220,7 +375,7 @@ export const FileField = ({
               icon={
                 _value ? (
                   <FaFileCircleXmark
-                    color={openModal ? "#960018" : "#04900a"}
+                    color={openModal ? "#960018" : "#04900a"} // Consider removing openModal dependency for color
                     className="w-[16px] h-[16px] lg:w-[20px] lg:h-[20px]"
                   />
                 ) : (
@@ -233,6 +388,7 @@ export const FileField = ({
                 )
               }
               className={_value ? "z-20" : ""}
+              disabled={disabled} // Disable delete button if FileField is disabled
             />
           </label>
         </div>
@@ -262,9 +418,9 @@ export const FileField = ({
                 id={option.value}
                 name="booleanOption"
                 value={option.value}
-                checked={false}
+                checked={false} // This should be handled by an internal state for radio group if actual selection is needed
                 onClick={() => handleRadioChange(option.value)}
-                onChange={(e) => e.preventDefault()}
+                onChange={(e) => e.preventDefault()} // Prevent default onChange
               />
             ))}
           </div>
@@ -277,6 +433,57 @@ export const FileField = ({
           {error}
         </span>
       )}
+
+      {/* --- File Viewer Modal --- */}
+      <Modal
+        isOpen={showFileViewerModal}
+        onClose={() => {
+          setShowFileViewerModal(false);
+          // Clean up object URL if it was created
+          if (fileUrlForModal?.startsWith("blob:")) {
+            URL.revokeObjectURL(fileUrlForModal);
+          }
+          setFileUrlForModal(null);
+          setFileObjectForModal(null);
+        }}
+        title="مشاهده فایل"
+      >
+        {fileUrlForModal ? (
+          isImageFile(fileUrlForModal, fileObjectForModal) ? (
+            <img
+              src={fileUrlForModal}
+              alt="Preview"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+                display: "block",
+              }}
+            />
+          ) : (
+            <iframe
+              src={fileUrlForModal}
+              style={{
+                border: "none",
+                width: "100%",
+                height: "100%",
+                flex: "1 1 0",
+                minHeight: 0,
+                display: "block",
+              }}
+              title="PDF Viewer"
+            >
+              این مرورگر از نمایش فایل‌های PDF پشتیبانی نمی‌کند. می‌توانید فایل
+              را دانلود کنید:{" "}
+              <a href={fileUrlForModal} download>
+                دانلود PDF
+              </a>
+            </iframe>
+          )
+        ) : (
+          <p>فایلی برای نمایش وجود ندارد.</p>
+        )}
+      </Modal>
     </div>
   );
 };

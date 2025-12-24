@@ -57,6 +57,7 @@ export { ArchiveHeader } from "./pages/ArchiveHeader/index.jsx";
 // import moment from "jalali-moment";
 // import { Label } from "./components/Label/index.jsx";
 // import { ArchiveHeader } from "./pages/SpecialistFormPage/layouts/ArchiveHeader/index.jsx";
+// import { FileField } from "./components/FileField/index.jsx";
 
 // export const text = {
 //   pMHx: "PMHx ",
@@ -493,6 +494,20 @@ export { ArchiveHeader } from "./pages/ArchiveHeader/index.jsx";
 //           setUser={setUser}
 //           qbc={"qbc"}
 //           toast={""}
+//         />
+//         <FileField
+//           label="Upload file"
+//           questionKey={""}
+//           value={""}
+//           onChange={""}
+//           register={""}
+//           validation={{
+//             required: validationMessages.required,
+//           }}
+//           errors={""}
+//           divider="center"
+//           accept={".jpeg,.png,.gif,.tif,.psd,.pdf,.raw,.svg"}
+//           en
 //         />
 //       </FormProvider>
 //     </Page>
