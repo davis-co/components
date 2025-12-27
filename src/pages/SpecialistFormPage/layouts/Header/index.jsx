@@ -343,11 +343,11 @@ export const Header = ({
               >
                 <Label
                   label={"وضعیت خدمت"}
-                  className={"!text-[9px] lg:!text-xs"}
+                  className={"!text-[9px] lg:!text-xs  mb-0.5"}
                 />
                 <div
                   className={classNames(
-                    "flex justify-between gap-1.5 md:gap-2 px-1 lg:px-2 lg:py-[12.5px] md:h-[23px] md:py-[3px] xs:py-[5px] border-[0.25px] border-solid bg-[#f7f7f7] hover:bg-white xs:!rounded-[4px] md:!rounded border-black",
+                    "flex justify-between gap-1.5 md:gap-2 px-1 lg:px-2  h-[22px] !py-0.5 border-[0.25px] border-solid bg-[#f7f7f7] hover:bg-white xs:!rounded-[4px] md:!rounded border-black",
                     formData[1585472454126] ? "bg-white" : ""
                   )}
                 >
