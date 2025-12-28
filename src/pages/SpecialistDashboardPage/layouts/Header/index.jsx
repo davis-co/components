@@ -27,24 +27,39 @@ export const Header = ({
       >
         <div className="grid md:grid-cols-2 lg:flex items-center w-full flex-wrap gap-x-4 lg:gap-x-3 xl:gap-x-5 gap-y-4">
           <DateInput
-            containerClassName={"!flex-row !flex-1 lg:!w-auto !gap-3"}
-            className={"flex-1"}
+            containerClassName={
+              "flex !flex-row items-center flex-1 md:ml-auto  !shadow-none"
+            }
+            className={
+              "border-[0.25px] !rounded-[3px] lg:!rounded w-full"
+            }
+            labelClassName="!w-[60px] "
             label={"از تاریخ :"}
             id="from_date"
             control={control}
             watch={watch}
           />
           <DateInput
-            containerClassName={"!flex-row !flex-1 lg:!w-auto !gap-3"}
-            className={"flex-1"}
+            containerClassName={
+              "flex !flex-row items-center flex-1 md:ml-auto  !shadow-none"
+            }
+            className={
+              "border-[0.25px] !rounded-[3px] lg:!rounded w-full"
+            }
+            labelClassName="!w-[60px] "
             label={"تا تاریخ :"}
             id="end_date"
             control={control}
             watch={watch}
           />
           <TextField
-            containerClassName={"!flex-row !flex-1 lg:!w-auto !gap-3"}
-            className={"flex-1"}
+            containerClassName={
+              "flex !flex-row items-center flex-1 md:ml-auto  !shadow-none"
+            }
+            className={
+              "border-[0.25px] !rounded-[3px] lg:!rounded w-full"
+            }
+            labelClassName="!w-[60px] "
             questionKey={"6620"}
             watch={watch}
             register={register}

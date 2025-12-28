@@ -49,7 +49,7 @@ export const TextField = ({
   const inputProps = {
     className: classNames(
       inputClassName,
-      "w-full font-500 text-2xs lg:text-xs text-black border-[0.5px]  rounded border-black text-2xs lg:placeholder:text-xs bg-background py-0.5 px-1.5 hover:outline-none hover:bg-white hover:ring-0 hover:border-success focus:outline-none focus:bg-white focus:ring-0 focus:border-success",
+      "w-full font-500 text-xs lg:text-xs text-black border-[0.5px]  rounded border-black text-2xs lg:placeholder:text-xs bg-background py-1 px-1.5 hover:outline-none hover:bg-white hover:ring-0 hover:border-success focus:outline-none focus:bg-white focus:ring-0 focus:border-success",
       props.rows ? "!py-2 !px-2" : "",
       disabled && "cursor-not-allowed",
       inputValue ? "!bg-white !font-600" : ""

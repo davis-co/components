@@ -347,7 +347,7 @@ export const Header = ({
                 />
                 <div
                   className={classNames(
-                    "flex justify-between gap-1.5 md:gap-2 px-1 lg:px-2  h-[22px] !py-0.5 border-[0.25px] border-solid bg-[#f7f7f7] hover:bg-white xs:!rounded-[4px] md:!rounded border-black",
+                    "flex justify-between gap-1.5 md:gap-2 px-1 lg:px-2 !py-[1.5px] lg:!py-0 border border-solid bg-[#f7f7f7] hover:bg-white xs:!rounded-[4px] md:!rounded border-black",
                     formData[1585472454126] ? "bg-white" : ""
                   )}
                 >
@@ -357,7 +357,7 @@ export const Header = ({
                       label={o.label}
                       className={classNames(
                         styles.radio,
-                        "!bg-transparent !border-none !gap-0 md:!gap-[1px] lg:!gap-1 !py-0 !px-0"
+                        "!bg-transparent !border-none !gap-0 md:!gap-[1px] lg:!gap-1  !px-0"
                       )}
                       name={1585472454126}
                       value={o.value}
